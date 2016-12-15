@@ -1,36 +1,36 @@
 <template>
-  <div id="app">
-    <navi></navi>
-    <router-view keep-alive></router-view>
-  </div>
+    <div id="app">
+        <navi></navi>
+        <router-view keep-alive></router-view>
+    </div>
 </template>
-
 <script>
 // import Hello from './components/Hello'
 import navi from './components/Navi'
 
 export default {
-  name: 'app',
-  components: {
-    // Hello,
-    navi
-  }
+    name: 'app',
+    components: {
+        // Hello,
+        navi
+    }
 }
 </script>
-
 <style>
-*{
-  padding: 0;
-  margin: 0;
+* {
+    padding: 0;
+    margin: 0;
 }
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
 }
-li{
-  list-style: none;
+
+li {
+    list-style: none;
 }
 </style>
