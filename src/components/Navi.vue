@@ -1,7 +1,9 @@
 <template>
   	<div class="nav">
     	<ul>
-    		<li v-for="item in navLists" track-by="$index" @click="toAjax">{{item}}</li>
+    		<li v-for="item in navLists" track-by="$index" @click="toAjax">
+    			<router-link :to="'/' + item.linkName">{{item.linkName}}</router-link>
+    		</li>
     	</ul>
   	</div>
 </template>
@@ -11,13 +13,18 @@ export default {
   	name: 'nav',
   	data () {
     	return {
-      	navLists: ['Index', 'Vue', 'About Me']
+      		navLists: [
+      		{
+      			linkName: 'Hello'
+      		}, {
+      			linkName: 'Index'
+      		}]
     	}
   	},
   	methods : {
 		toAjax(){
 			// console.log(this.$http.get)
-			this.$http.get('a.json')
+			// this.$http.get('a.json')
 		}
   	}
 }
@@ -30,14 +37,19 @@ export default {
 	    background: rgba(45,45,45,0.5);
 	    padding: 0px;
 	}
-	li{
+	a{
 		font-weight: bold;
 		color: white;
 		cursor: pointer;
+		display: block;
 		padding: 10px;
 	}
-	li:hover{
+	a:hover{
 		background: white;
 		color: black;
+	}
+	a{
+		color: white;
+		text-decoration: none;
 	}
 </style>

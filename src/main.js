@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import Navi from './components/Navi'
 import Hello from './components/Hello'
+import Index from './components/Index'
 import vueRouter from 'vue-router'
 import vueResource from 'vue-resource'
 
@@ -12,13 +13,13 @@ Vue.use(vueRouter);
 
 const routes = [{
     path: '/',
-    component: Hello
+    redirect: '/Hello'
 }, {
-    path: '/hello',
+    path: '/index',
+    component: Index
+}, {
+    path: '*',
     component: Hello
-},{
-	path: '*',
-	component: Navi
 }];
 
 const router = new vueRouter({
