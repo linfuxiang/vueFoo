@@ -2,9 +2,10 @@
     <div class="nav">
         <ul>
             <li v-for="item in navLists" track-by="$index" @click="toAjax">
-                <router-link :to="'/' + item.linkName">{{item.linkName}}</router-link>
+                <router-link active-class="active" :to="'/' + item.linkName">{{item.linkName}}</router-link>
             </li>
         </ul>
+        <!-- <img src="../assets/logo.png" alt=""> -->
     </div>
 </template>
 <script>
@@ -28,28 +29,56 @@ export default {
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+/**
+ * 导航栏CSS属性设置
+ * @type {[type]}
+ */
+$bgColor: #d0ebff;
+$fontColor: #4c4c4c;
+$activeFontColor: #3466bb;
+$activeBgColor: #ecf7ff;
+
+$navPositionTop: -30px;
+
+$transitionTime: all 0.5s;
+
+@mixin setActiveColor{
+	background: $activeBgColor;
+	color: $activeFontColor;
+}
+
 ul {
     position: fixed;
-    background: rgba(45, 45, 45, 0.5);
-    padding: 0px;
+    left: 0px;
+    top: $navPositionTop;
+    background: $bgColor;
+    transition: $transitionTime;
+    li{
+    	display: inline-block;
+    }
+    a {
+	    font-weight: bold;
+	    color: $fontColor;
+	    cursor: pointer;
+	    display: block;
+	    padding: 10px;
+	    transition: $transitionTime;
+	    &:hover {
+		    @include setActiveColor;
+		}
+	}
+	&:hover{
+		top: 0px;
+	}
 }
 
-a {
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    display: block;
-    padding: 10px;
+.active{
+	@include setActiveColor;
+	cursor: default;
 }
 
-a:hover {
-    background: white;
-    color: black;
-}
-
-a {
-    color: white;
-    text-decoration: none;
+@media screen and (max-width: 768px) {
+	
 }
 </style>

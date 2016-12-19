@@ -5,13 +5,11 @@
     </div>
 </template>
 <script>
-// import Hello from './components/Hello'
 import navi from './components/Navi'
 
 export default {
     name: 'app',
     components: {
-        // Hello,
         navi
     }
 }
@@ -23,14 +21,19 @@ export default {
 }
 
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: Helvetica Neue,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    padding-top: 8px;
 }
-
+    
 li {
     list-style: none;
+}
+
+a{
+    text-decoration: none;
 }
 </style>
