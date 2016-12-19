@@ -10,6 +10,9 @@ export default {
         return {
             msg: 'Welcome to Your Vue.js App'
         }
+    },
+    mounted: function(){
+        console.log(this.$route.query.last);
     }
 }
 </script>

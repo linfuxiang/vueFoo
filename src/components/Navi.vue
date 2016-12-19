@@ -2,7 +2,7 @@
     <div class="nav">
         <ul>
             <li v-for="item in navLists" track-by="$index" @click="toAjax">
-                <router-link active-class="active" :to="'/' + item.linkName">{{item.linkName}}</router-link>
+                <router-link active-class="active" :to="{path:'/' + item.linkName,query:{last: item.linkName}}">{{item.linkName}}</router-link>
             </li>
         </ul>
         <!-- <img src="../assets/logo.png" alt=""> -->

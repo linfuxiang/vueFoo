@@ -27,7 +27,7 @@ export default {
         }
     },
     mounted: function(){
-
+        console.log(this.$route.query.last);
     }
 }
 </script>
