@@ -2,7 +2,7 @@
     <div class="nav">
         <ul>
             <li v-for="item in navLists" track-by="$index" @click="toAjax">
-                <router-link active-class="active" :to="{path:'/' + item.linkName,query:{last: item.linkName}}">{{item.linkName}}</router-link>
+                <router-link active-class="active" :to="{path:'/' + item.link,query:{last: item.link}}">{{item.linkName}}</router-link>
             </li>
         </ul>
         <!-- <img src="../assets/logo.png" alt=""> -->
@@ -10,13 +10,14 @@
 </template>
 <script>
 export default {
-    name: 'nav',
     data() {
         return {
             navLists: [{
-                linkName: 'Hello'
+                linkName: '欢迎页',
+                link: 'Hello'
             }, {
-                linkName: 'Index'
+                linkName: '首页',
+                link: 'Index'
             }]
         }
     },

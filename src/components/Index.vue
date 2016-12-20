@@ -1,33 +1,33 @@
 <template>
     <div class="index">
-        这里才是首页
-        <button @click="toAjax">请求数据</button>
-        <ul><li v-for="item in jsonData">{{item.name}}</li></ul>
+        <header>{{header}}</header>
+        <top :jsonData="jsonData" keep-alive></top>
     </div>
 </template>
 <script>
-// import data1 from 'assets/static/data/a.json';
+import top from './Top'
+// import geo from './Geo'
 
 export default {
-    name: 'nav',
     data() {
         return {
-            navLists: ['Index', 'Vue', 'About Me'],
-            jsonData: []
+            header: '数读PM2.5',
+            jsonData: [],
+            apiUrl: 'http://superlfx.cn:10011'
         }
+    },
+    components: {
+        top
     },
     methods: {
-        toAjax() {
-            let self = this;
-	    	this.$http.get('static/data/a.json').then((res) => {
-	    		self.jsonData = self.jsonData.concat(res.data.sites);
-	    	}, (res) => {
-	    		console.log(res);
-	    	});
-        }
     },
-    mounted: function(){
+    mounted() {
         console.log(this.$route.query.last);
+        this.$http.jsonp(this.apiUrl).then((res) => {
+            this.jsonData = res.data;
+        }, (err) => {
+            console.log(err);
+        });
     }
 }
 </script>

@@ -5,13 +5,12 @@
 </template>
 <script>
 export default {
-    name: 'hello',
     data() {
         return {
-            msg: 'Welcome to Your Vue.js App'
+            msg: 'Welcome to Air Quality Monitoring Platform'
         }
     },
-    mounted: function(){
+    mounted() {
         console.log(this.$route.query.last);
     }
 }

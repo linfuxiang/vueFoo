@@ -1,16 +1,30 @@
 <template>
-    <div id="app">
+    <div id="app" v-if="!isMobile">
         <navi></navi>
         <router-view keep-alive></router-view>
     </div>
+    <div id="app" v-else>{{isMobile ? '请用电脑浏览器打开' : ''}}</div>
 </template>
 <script>
 import navi from './components/Navi'
 
 export default {
     name: 'app',
+    data() {
+        return {
+            isMobile: ''
+        }
+    },
     components: {
         navi
+    },
+    mounted() {
+        // 没做移动端适配前，判断是否手机浏览器
+        var UA = navigator.userAgent,
+            isAndroid = /android|adr/gi.test(UA),
+            isIos = /iphone|ipod|ipad/gi.test(UA) && !isAndroid,
+            isMobile = isAndroid || isIos;
+        this.isMobile = isMobile;
     }
 }
 </script>
