@@ -2,22 +2,24 @@
     <div class="index">
         <header>{{header}}</header>
         <top :jsonData="jsonData" keep-alive></top>
+        <geo :jsonData="jsonData" keep-alive></geo>
     </div>
 </template>
 <script>
 import top from './Top'
-// import geo from './Geo'
+import geo from './Geo'
 
 export default {
     data() {
         return {
-            header: '数读PM2.5',
+            header: '实时PM2.5监测',
             jsonData: [],
             apiUrl: 'http://superlfx.cn:10011'
         }
     },
     components: {
-        top
+        top,
+        geo
     },
     methods: {
     },

@@ -2,20 +2,6 @@
     <div class="index">
         <div id="best20" style="width: 1024px;height: 400px;"></div>
         <div id="worst20" style="width: 1024px;height: 400px;"></div>
-        <!-- <table id="table">
-            <tr>
-                <th>城市</th>
-                <th>指数</th>
-                <th>状况</th>
-            </tr>
-            <tr v-for="item in jsonData">
-                <td>{{item.city}}</td>
-                <td>{{item.num}}</td>
-                <td>{{item.situ}}</td>
-            </tr>
-        </table> -->
-        <!-- <div>{{jsonData}}</div> -->
-        <!-- <button @click="change">123</button> -->
     </div>
 </template>
 <script>
