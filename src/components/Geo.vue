@@ -1,6 +1,6 @@
 <template>
     <div class="index">
-        <div id="geo" style="width: 1200px;height: 600px;"></div>
+        <div id="geo" style="width: 800px;height: 600px;"></div>
     </div>
 </template>
 <script>
@@ -20,11 +20,10 @@ export default {
     	'jsonData'
     ],
     mounted() {
-        this.$watch('jsonData', function (newVal, oldVal) {
+        // this.$watch('jsonData', function (newVal, oldVal) {
             var data = [];
             this.jsonData.forEach((val, key) => {
-                var str = val.city;
-                str = str.replace(/['市'|'县']/, function(a){
+                var str = val.city.replace(/['市'|'县']/, function(a){
                     return '';
                 });
                 data.push({
@@ -144,10 +143,13 @@ export default {
             };
             var map = echarts.init(document.getElementById('geo'));
             map.setOption(option);
-        });
+        // });
     }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+#geo{
+	margin: 0 auto;
+}
 </style>
