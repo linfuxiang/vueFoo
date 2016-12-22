@@ -46,54 +46,68 @@ export default {
                 return res;
             };
             var option = {
-                backgroundColor: '#404a59',
+                backgroundColor: '#fff',
                 title: {
                     text: '全国主要城市空气质量',
-                    subtext: 'data from PM25.in',
-                    sublink: 'http://www.pm25.in',
+                    subtext: 'data from tianqi.com',
+                    sublink: 'http://www.tianqi.com/air/',
                     left: 'center',
                     textStyle: {
-                        color: '#fff'
+                        color: '#000'
                     }
                 },
                 tooltip: {
-                    trigger: 'item'
-                },
-                legend: {
-                    orient: 'vertical',
-                    y: 'bottom',
-                    x: 'right',
-                    data: ['pm2.5'],
-                    textStyle: {
-                        color: '#fff'
-                    }
-                },
-                geo: {
-                    map: 'china',
-                    label: {
-                        emphasis: {
-                            show: false
-                        }
-                    },
-                    roam: true,
-                    itemStyle: {
-                        normal: {
-                            areaColor: '#323c48',
-                            borderColor: '#111'
-                        },
-                        emphasis: {
-                            areaColor: '#2a333d'
-                        }
-                    }
-                },
+			        trigger: 'item',
+			        formatter: function (params) {
+			            return params.name + ' : ' + params.value[2];
+			        }
+			    },
+			    legend: {
+			        orient: 'vertical',
+			        y: 'bottom',
+			        x:'right',
+			        data:['pm2.5'],
+			        textStyle: {
+			            color: '#000'
+			        }
+			    },
+			    visualMap: {
+			        min: 0,
+			        max: 500,
+			        calculable: true,
+			        inRange: {
+			            color: ['#50a3ba', '#eac736', '#d94e5d']
+			        },
+			        textStyle: {
+			            color: '#000'
+			        }
+			    },
+			    geo: {
+			        map: 'china',
+			        label: {
+			            emphasis: {
+			                show: false
+			            }
+			        },
+			        roam: true,
+			        itemStyle: {
+			            normal: {
+			                areaColor: '#fff',
+			                borderColor: '#111'
+			            },
+			            emphasis: {
+			                areaColor: 'pink'
+			            }
+			        }
+			    },
                 series: [{
                     name: 'pm2.5',
                     type: 'scatter',
                     coordinateSystem: 'geo',
                     data: convertData(data),
-                    symbolSize: function(val) {
-                        return val[2] / 10;
-                    },
+                    // symbolSize: function(val) {
+                    //     return val[2] / 10;
+                    // },
                     label: {
                         normal: {
                             formatter: '{b}',
@@ -116,9 +130,9 @@ export default {
                     data: convertData(data.sort(function(a, b) {
                         return b.value - a.value;
                     }).slice(0, 6)),
-                    symbolSize: function(val) {
-                        return val[2] / 10;
-                    },
+                    // symbolSize: function(val) {
+                    //     return val[2] / 10;
+                    // },
                     showEffectOn: 'render',
                     rippleEffect: {
                         brushType: 'stroke'

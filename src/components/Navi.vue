@@ -18,6 +18,9 @@ export default {
             }, {
                 linkName: '首页',
                 link: 'Index'
+            }, {
+                linkName: '详细数据',
+                link: 'details'
             }]
         }
     },
@@ -55,6 +58,7 @@ ul {
     top: $navPositionTop;
     background: $bgColor;
     transition: $transitionTime;
+    z-index: 999;
     li{
     	display: inline-block;
     }

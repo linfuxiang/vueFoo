@@ -5,6 +5,7 @@ import App from './App'
 import Navi from './components/Navi'
 import Hello from './components/Hello'
 import Index from './components/Index'
+import Details from './components/Details'
 import vueRouter from 'vue-router'
 import vueResource from 'vue-resource'
 
@@ -17,6 +18,9 @@ const routes = [{
 }, {
     path: '/index',
     component: Index
+}, {
+    path: '/details',
+    component: Details
 }, {
     path: '*',
     component: Hello

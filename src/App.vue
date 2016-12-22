@@ -1,12 +1,14 @@
 <template>
     <div id="app" v-if="!isMobile">
         <navi></navi>
-        <router-view keep-alive></router-view>
+        <keep-alive><router-view></router-view></keep-alive>
+        <tips></tips>
     </div>
     <div id="app" v-else>{{isMobile ? '请用电脑浏览器打开' : ''}}</div>
 </template>
 <script>
 import navi from './components/Navi'
+import tips from './components/Tips'
 
 export default {
     name: 'app',
@@ -16,7 +18,8 @@ export default {
         }
     },
     components: {
-        navi
+        navi,
+        tips
     },
     mounted() {
         // 没做移动端适配前，判断是否手机浏览器
