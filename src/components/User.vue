@@ -6,7 +6,7 @@
 	        <a href="" @click.prevent="toSignUp">注册</a>
     	</div>
     	<div class="signed" v-else>
-    		<a href="" @click.prevent="changeStatus">登出</a>
+    		<a href="" @click.prevent="cancelSignin">登出</a>
     	</div>
         <div class="b_signin" v-if="isSignIn">
         	<i @click="closePopup">×</i>
@@ -42,6 +42,7 @@
 export default {
     data() {
         return {
+        	userName: '',
             isSigned: false,
             isSignIn: false,
             isSignUp: false,
@@ -65,11 +66,11 @@ export default {
     	closePopup() {
     		this.initStatus();
     	},
-        changeStatus() {
-        	this.isSigned = !this.isSigned;
+        cancelSignin() {
+        	this.userName = '';
+        	this.isSigned = false;
         },
         initStatus() {
-        	this.isSigned = false;
             this.isSignIn = false;
             this.isSignUp = false;
             this.un = '';
@@ -96,7 +97,14 @@ export default {
 			                pw: this.pw1
 			            }
 			        }).then((res) => {
-			            console.log(res.data);
+			            let data = res.data;
+			            if(data.status == 200) {
+			            	this.initStatus();
+			            	this.userName = data.un;
+			            	this.isSigned = true;
+			            } else {
+			            	this.isErr = true;
+			            }
 			        }, (err) => {
 			            console.log(err);
 			        });
@@ -104,6 +112,7 @@ export default {
         		//注册
         		case 2:
         			if(this.pw1 !== this.pw2){
+        				this.status = '用户名已存在或密码不相同';
 						this.showErr();
         				return false;
         			}
@@ -113,7 +122,15 @@ export default {
 			                pw: this.pw1
 			            }
 			        }).then((res) => {
-			            console.log(res.data);
+			            let data = res.data;
+			            if(data.status == 200) {
+			            	this.initStatus();
+			            	this.userName = data.un;
+			            	this.isSigned = true;
+			            } else {
+			            	this.status = '用户名已存在或密码不相同';
+			            	this.isErr = true;
+			            }
 			        }, (err) => {
 			            console.log(err);
 			        });
