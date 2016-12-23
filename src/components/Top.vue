@@ -1,5 +1,5 @@
 <template>
-    <div class="index">
+    <div class="top">
         <div id="best20" style="width: 1100px;height: 400px;"></div>
         <div id="worst20" style="width: 1100px;height: 400px;"></div>
     </div>

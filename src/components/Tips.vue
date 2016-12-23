@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="">
         <table cellspacing="0" class="m10">
             <tr>
             	<th rowspan="7" class="tip">
@@ -69,13 +69,17 @@ export default {
 	$level5BgColor: #B3065B;
 	$level6BgColor: #600202;
 
+	@mixin transitionOpt($time: 1s){
+		transition: all $time;
+	}
+
 	table{
 		width: 700px;
 		position: fixed;
 		font-size: 14px;
 		right: -670px;
-		top: 0px;
-		transition: right 1s;
+		bottom: 0px;
+		@include transitionOpt;
 		&:hover{
 			th:nth-of-type(1){
 				opacity: 0;
@@ -83,6 +87,7 @@ export default {
 			right: 0px;
 		}
 		th{
+			@include transitionOpt;
 			background-color: $thBgColor;
 			color: $thFontColor;
 			padding: 2px 0;

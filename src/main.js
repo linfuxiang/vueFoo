@@ -2,10 +2,10 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import Navi from './components/Navi'
 import Hello from './components/Hello'
 import Index from './components/Index'
 import Details from './components/Details'
+import User from './components/User'
 import vueRouter from 'vue-router'
 import vueResource from 'vue-resource'
 
@@ -13,17 +13,17 @@ Vue.use(vueResource);
 Vue.use(vueRouter);
 
 const routes = [{
-    path: '/',
-    redirect: '/Hello'
+    path: '/Hello',
+    component: Hello
 }, {
-    path: '/index',
+    path: '/Index',
     component: Index
 }, {
-    path: '/details',
+    path: '/Details',
     component: Details
 }, {
     path: '*',
-    component: Hello
+    redirect: '/Hello'
 }];
 
 const router = new vueRouter({

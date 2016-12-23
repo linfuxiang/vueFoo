@@ -1,8 +1,9 @@
 <template>
     <div class="nav">
         <ul>
-            <li v-for="item in navLists" track-by="$index" @click="toAjax">
-                <router-link active-class="active" :to="{path:'/' + item.link,query:{last: item.link}}">{{item.linkName}}</router-link>
+            <li v-for="item in navLists" @click="toAjax">
+                <!-- <router-link active-class="active" :to="{path:'/' + item.link,query:{last: item.link}}">{{item.linkName}}</router-link> -->
+                <router-link active-class="active" :to="{path:'/' + item.link}">{{item.linkName}}</router-link>
             </li>
         </ul>
         <!-- <img src="../assets/logo.png" alt=""> -->
@@ -27,7 +28,6 @@ export default {
     methods: {
         toAjax() {
             // console.log(this.$http.get)
-            // this.$http.get('a.json')
         }
     }
 }
@@ -68,6 +68,8 @@ ul {
 	    cursor: pointer;
 	    display: block;
 	    padding: 10px;
+        font-size: 20px;
+        line-height: 20px;
 	    transition: $transitionTime;
 	    &:hover {
 		    @include setActiveColor;

@@ -1,5 +1,5 @@
 <template>
-    <div class="index">
+    <div class="geo">
         <div id="geo" style="width: 800px;height: 600px;"></div>
     </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="details">
         <h1>{{ msg }}</h1>
         <input v-model="searchArea" @keyup.enter="search" placeholder="输入为空则搜索全部数据">
         <button @click="search" :disabled="!abledToSearch" :class="{unabled: !abledToSearch}">搜索</button>
@@ -60,7 +60,7 @@ export default {
     	}
     },
     mounted() {
-        console.log(this.$route.query.last);
+        // console.log(this.$route.query.last);
     }
 }
 </script>

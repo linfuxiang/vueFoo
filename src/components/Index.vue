@@ -38,7 +38,7 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$route.query.last);
+        // console.log(this.$route.query.last);
         this.$http.jsonp(this.apiUrl, {
             params: {
                 'reqCollection': 'latest',
