@@ -3,24 +3,28 @@
         <header>{{header}}</header>
         <!-- <top :jsonData="jsonData" keep-alive v-if="showWhichComponent == 1"></top> -->
         <!-- <geo :jsonData="jsonData" keep-alive v-if="showWhichComponent == 2"></geo> -->
-        <keep-alive>
-            <!-- <transition name="fade" mode="out-in"> -->
-            <component :jsonData="jsonData" :is="showWhichComponent"></component>
-            <!-- </transition> -->
-        </keep-alive>
+        <!-- <transition name="fade"> -->
+            <keep-alive>
+                <!-- <transition name="fade" mode="out-in"> -->
+                <component :jsonData="jsonData" :is="showWhichComponent"></component>
+                <!-- </transition> -->
+            </keep-alive>
+        <!-- </transition> -->
+        
         <button @click="change">切换图表&gt;</button>
     </div>
 </template>
 <script>
 import top from './Top'
 import geo from './Geo'
+import GLOBAL_PATH from 'static/path.js'
 
 export default {
     data() {
         return {
             header: '实时空气质量指数(AQI)监测',
             jsonData: [],
-            apiUrl: 'http://superlfx.cn:10011',
+            apiUrl: GLOBAL_PATH.JSONP_URI,
             showWhichComponent: 'top'
         }
     },
@@ -55,11 +59,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 $buttonColor: #A5DE37;
-.fade-transition {
-    transition: opacity 3s ease;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
 }
-.fade-enter, .fade-leave {
-    opacity: 0;
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }
 button {
     background-color: $buttonColor;

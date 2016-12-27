@@ -39,6 +39,8 @@
     </div>
 </template>
 <script>
+import GLOBAL_PATH from 'static/path.js'
+
 export default {
     data() {
         return {
@@ -51,7 +53,7 @@ export default {
             pw2: '',
             status: '用户名或密码错误',
             isErr: false,
-            signUri: 'http://superlfx.cn:10011/'
+            signUri: GLOBAL_PATH.JSONP_URI
         }
     },
     methods: {

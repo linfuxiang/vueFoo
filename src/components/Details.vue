@@ -21,11 +21,13 @@
     </div>
 </template>
 <script>
+import GLOBAL_PATH from 'static/path.js'
+
 export default {
     data() {
         return {
             msg: '详细数据报表',
-            apiUrl: 'http://superlfx.cn:10011',
+            apiUrl: GLOBAL_PATH.JSONP_URI,
             jsonData: [],
             searchArea: '',
             lastSearchArea: null,
@@ -60,6 +62,7 @@ export default {
     	}
     },
     mounted() {
+    	// console.log(GLOBAL_PATH);
         // console.log(this.$route.query.last);
     }
 }
