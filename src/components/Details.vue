@@ -64,6 +64,16 @@ export default {
     mounted() {
     	// console.log(GLOBAL_PATH);
         // console.log(this.$route.query.last);
+        // console.log('open');
+        // this.$parent.isShowLoading = false;
+    },
+    activated() {
+        // console.log('open');
+        // this.$parent.isShowLoading = false;
+    },
+    deactivated() {
+        // console.log('closed');
+        // this.$parent.isShowLoading = true;
     }
 }
 </script>

@@ -148,6 +148,7 @@ export default {
 		position: absolute;
 		top: 0px;
 		right: 0px;
+		background: white;
 	}
 	.signed{
 		@extend .sign;

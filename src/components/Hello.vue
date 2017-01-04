@@ -10,8 +10,20 @@ export default {
             msg: 'Welcome to Air Quality Monitoring Platform'
         }
     },
+    props:[
+        'isShowLoading'
+    ],
     mounted() {
-        // console.log(this.$route.query.last);
+        // console.log('open');
+        // this.$parent.isShowLoading = false;
+    },
+    activated() {
+        // console.log('open');
+        // this.$parent.isShowLoading = false;
+    },
+    deactivated() {
+        // console.log('closed');
+        // this.$parent.isShowLoading = true;
     }
 }
 </script>

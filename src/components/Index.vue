@@ -16,7 +16,7 @@
 </template>
 <script>
 import top from './Top'
-import geo from './Geo'
+// import geo from './Geo'
 import GLOBAL_PATH from 'static/path.js'
 
 export default {
@@ -29,8 +29,10 @@ export default {
         }
     },
     components: {
-        'top': top,
-        'geo': geo
+        top: top,
+        geo: function(resolve){
+            require(['./Geo'], resolve);
+        }
     },
     methods: {
         change() {
@@ -53,6 +55,16 @@ export default {
         }, (err) => {
             console.log(err);
         });
+        // console.log('open');
+        // this.$parent.isShowLoading = false;
+    },
+    activated() {
+        // console.log('open');
+        // this.$parent.isShowLoading = false;
+    },
+    deactivated() {
+        // console.log('closed');
+        // this.$parent.isShowLoading = true;
     }
 }
 </script>
