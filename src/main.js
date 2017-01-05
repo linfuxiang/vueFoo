@@ -2,25 +2,34 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import Hello from './components/Hello'
-import Index from './components/Index'
-import Details from './components/Details'
-import User from './components/User'
 import vueRouter from 'vue-router'
 import vueResource from 'vue-resource'
+// import elementUI from 'element-ui'
+// import 'element-ui/lib/theme-default/index.css'
 
 Vue.use(vueResource);
 Vue.use(vueRouter);
+// Vue.use(elementUI);
+
+// const Hello = require('./components/Hello.vue');
+// const Index = require('./components/Index.vue');
+// const Details = require('./components/Details.vue');
 
 const routes = [{
     path: '/Hello',
-    component: Hello
+    component: function(resolve){
+        require(['./components/Hello'], resolve);
+    }
 }, {
     path: '/Index',
-    component: Index
+    component: function(resolve){
+        require(['./components/Index'], resolve);
+    }
 }, {
     path: '/Details',
-    component: Details
+    component: function(resolve){
+        require(['./components/Details'], resolve);
+    }
 }, {
     path: '*',
     redirect: '/Hello'

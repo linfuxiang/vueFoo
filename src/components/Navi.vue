@@ -6,13 +6,19 @@
                 <router-link active-class="active" :to="{path:'/' + item.link}">{{item.linkName}}</router-link>
             </li>
         </ul>
-        <!-- <img src="../assets/logo.png" alt=""> -->
+        <!-- <el-menu theme="dark" :default-active="active" class="el-menu-demo" mode="horizontal" router @select="changeRoutes">
+            <template v-for="item in navLists">
+                <el-menu-item :index="'/' + item.link" v-on:click.native="foo">{{item.linkName}}</el-menu-item>
+            </template>  
+        </el-menu> -->
+
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
+            // active: '',
             navLists: [{
                 linkName: '欢迎页',
                 link: 'Hello'
@@ -22,13 +28,43 @@ export default {
             }, {
                 linkName: '详细数据',
                 link: 'details'
-            }]
+            }],
+            set: new Set()
         }
     },
     methods: {
         toAjax() {
             // console.log(this.$http.get)
+        },
+        changeRoutes() {
+            // this.$parent.isShowLoading = true;
+            // console.log(1);
+        },
+        foo() {
+            // if([...this.set].includes(this.$route.path)){
+
+            // } else {
+            //     this.$parent.isShowLoading = true;
+            //     this.set.add(this.$route.path);
+            // }
+            console.log('click');
         }
+    },
+    mounted() {
+        // this.set = new Set();
+        this.$watch('$route.path', function (newVal, oldVal) {
+            // this.$parent.isShowLoading = false;
+            // let path = this.$route.path;
+            // this.active = path;
+            // if([...this.set].includes(path)){
+            //     this.$parent.needShowLoading = false;
+            //     console.log('ok');
+            // } else {
+            //     this.$parent.needShowLoading = true;
+            //     console.log('no');
+            //     this.set.add(path);
+            // }
+        });
     }
 }
 </script>
