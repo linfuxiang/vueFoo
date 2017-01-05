@@ -3,7 +3,7 @@
         <ul>
             <li v-for="item in navLists" @click="toAjax">
                 <!-- <router-link active-class="active" :to="{path:'/' + item.link,query:{last: item.link}}">{{item.linkName}}</router-link> -->
-                <router-link active-class="active" :to="{path:'/' + item.link}" @click.native="foo">{{item.linkName}}</router-link>
+                <router-link active-class="active" :to="{path:'/' + item.link}">{{item.linkName}}</router-link>
             </li>
         </ul>
         <!-- <el-menu theme="dark" :default-active="active" class="el-menu-demo" mode="horizontal" router @select="changeRoutes">
@@ -47,7 +47,7 @@ export default {
             //     this.$parent.isShowLoading = true;
             //     this.set.add(this.$route.path);
             // }
-            // console.log('click');
+            console.log('click');
         }
     },
     mounted() {
