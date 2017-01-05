@@ -6,6 +6,7 @@
 	        <a href="" @click.prevent="toSignUp">注册</a>
     	</div>
     	<div class="signed" v-else>
+            <span>用户：{{userName}}</span>
     		<a href="" @click.prevent="cancelSignin">登出</a>
     	</div>
         <div class="b_signin" v-if="isSignIn">
@@ -71,6 +72,7 @@ export default {
         cancelSignin() {
         	this.userName = '';
         	this.isSigned = false;
+            localStorage.removeItem('userInfo');
         },
         initStatus() {
             this.isSignIn = false;
@@ -104,6 +106,10 @@ export default {
 			            	this.initStatus();
 			            	this.userName = data.un;
 			            	this.isSigned = true;
+                            this.setLocalstorage({
+                                userName : data.un,
+                                expire : new Date().getTime()+259200000
+                            });
 			            } else {
 			            	this.isErr = true;
 			            }
@@ -129,6 +135,10 @@ export default {
 			            	this.initStatus();
 			            	this.userName = data.un;
 			            	this.isSigned = true;
+                            this.setLocalstorage({
+                                userName : data.un,
+                                expire : new Date().getTime()+259200000
+                            });
 			            } else {
 			            	this.status = '用户名已存在或密码不相同';
 			            	this.isErr = true;
@@ -138,6 +148,20 @@ export default {
 			        });
         			break;
         	}
+        },
+        setLocalstorage(userInfo) {
+            localStorage.userInfo = JSON.stringify(userInfo);
+        }
+    },
+    mounted() {
+        if(localStorage.userInfo == undefined){
+            return ;
+        }
+        let userInfo = JSON.parse(localStorage.userInfo),
+            expire = (new Date()).getTime();
+        if(userInfo.userName && (userInfo.expire - expire >= 0)){
+            this.userName = userInfo.userName;
+            this.isSigned = true;
         }
     }
 }
