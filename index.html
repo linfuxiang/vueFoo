@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>my-pro</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  </body>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=fxtKkzhPfCgg4NXAujQjmKuCASwnnrOc"></script>
+    <script>
+	    // 百度地图API功能
+	    // var map = new BMap.Map("allmap");
+	    var point = new BMap.Point(116.331398, 39.897445);
+	    // map.centerAndZoom(point, 12);
+
+	    function myFun(result) {
+	        var cityName = result.name;
+	        // map.setCenter(cityName);
+	        console.log(cityName);
+	        localStorage.city = cityName;
+	    }
+	    var myCity = new BMap.LocalCity();
+	    myCity.get(myFun);
+    </script>
+</body>
+
 </html>

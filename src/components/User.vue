@@ -1,26 +1,31 @@
 <template>
     <div class="user">
-    	<div class="sign" v-if="!isSigned">
-    		<a href="" @click.prevent="toSignIn">登录</a>
-	        <span>/</span>
-	        <a href="" @click.prevent="toSignUp">注册</a>
-    	</div>
-    	<div class="signed" v-else>
-            <span>用户：{{userName}}</span>
-    		<a href="" @click.prevent="cancelSignin">登出</a>
-    	</div>
+        <div class="userInfo">
+            <div class="sign" v-if="!isSigned">
+                <a href="" @click.prevent="toSignIn">登录</a>
+                <span>/</span>
+                <a href="" @click.prevent="toSignUp">注册</a>
+            </div>
+            <div class="signed" v-else>
+                <span>用户：{{userName}}</span>
+                <a href="" @click.prevent="cancelSignin">登出</a>
+            </div>
+            <div v-show="hasSelectedCity">默认城市：{{city}}<span @click="selectCity">[重选]</span></div>
+            <div v-show="!hasSelectedCity" @click="selectCity">[选择城市]</div>
+        </div>
+    	
         <div class="b_signin" v-if="isSignIn">
-        	<i @click="closePopup">×</i>
-        	<h2>登录</h2>
-        	<label for="un">用户名</label>
-        	<input name="un" type="text" v-model.trim="un">
-        	<label for="pw">密码</label>
-        	<input name="pw" type="password" v-model.trim="pw1">
-        	<div v-show="isErr">{{status}}</div>
-        	<input type="button" value="登录" @click="checkInput(1)">
-        	<div>
-        		<a href="" @click.prevent="toSignUp">没有账号，去注册</a>
-        	</div>
+            <i @click="closePopup">×</i>
+            <h2>登录</h2>
+            <label for="un">用户名</label>
+            <input name="un" type="text" v-model.trim="un">
+            <label for="pw">密码</label>
+            <input name="pw" type="password" v-model.trim="pw1">
+            <div v-show="isErr">{{status}}</div>
+            <input type="button" value="登录" @click="checkInput(1)">
+            <div>
+                <a href="" @click.prevent="toSignUp">没有账号，去注册</a>
+            </div>
         </div>
         <div class="b_signup" v-if="isSignUp">
         	<i @click="closePopup">×</i>
@@ -36,6 +41,9 @@
         	<div>
         		<a href="" @click.prevent="toSignIn">已有账号，去登录</a>
         	</div>
+        </div>
+        <div class="b_city" v-if="">
+            <div></div>
         </div>
     </div>
 </template>
@@ -54,7 +62,9 @@ export default {
             pw2: '',
             status: '用户名或密码错误',
             isErr: false,
-            signUri: GLOBAL_PATH.JSONP_URI
+            signUri: GLOBAL_PATH.JSONP_URI,
+            hasSelectedCity: localStorage.city ? true : false,
+            city: localStorage.city || ''
         }
     },
     methods: {
@@ -96,10 +106,11 @@ export default {
         		//登录
         		case 1: 
         			this.$http.jsonp(this.signUri + 'signin', {
-			            params: {
-			                un: this.un,
-			                pw: this.pw1
-			            }
+                    // this.$http.post('/signin', {
+                        params: {
+                            un: this.un,
+                            pw: this.pw1
+                        }
 			        }).then((res) => {
 			            let data = res.data;
 			            if(data.status == 200) {
@@ -124,7 +135,8 @@ export default {
 						this.showErr();
         				return false;
         			}
-        			this.$http.jsonp(this.signUri + 'signup', {
+                    this.$http.jsonp(this.signUri + 'signup', {
+        			// this.$http.post('/signup', {
 			            params: {
 			                un: this.un,
 			                pw: this.pw1
@@ -151,6 +163,10 @@ export default {
         },
         setLocalstorage(userInfo) {
             localStorage.userInfo = JSON.stringify(userInfo);
+        },
+        selectCity() {
+            this.hasSelectedCity = !this.hasSelectedCity;
+            // this.city = '广州';
         }
     },
     mounted() {
@@ -168,14 +184,11 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-	.sign{
+	.userInfo{
 		position: absolute;
 		top: 0px;
 		right: 0px;
 		background: white;
-	}
-	.signed{
-		@extend .sign;
 	}
 	.b_signin{
 		// width: 250px;

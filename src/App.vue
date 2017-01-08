@@ -16,6 +16,8 @@ import tips from './components/Tips'
 import user from './components/User'
 import loading from './components/Loading'
 
+
+
 export default {
     name: 'app',
     data() {
@@ -38,6 +40,9 @@ export default {
             isIos = /iphone|ipod|ipad/gi.test(UA) && !isAndroid,
             isMobile = isAndroid || isIos;
         this.isMobile = isMobile;
+        if(isMobile){
+            return false;
+        }
     }
 }
 </script>
