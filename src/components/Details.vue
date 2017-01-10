@@ -47,7 +47,7 @@ export default {
     		// let today = new Date();
 	        // let collectionName = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + ':00';
 	        let collectionName = 'latest';
-	        this.$http.jsonp(this.apiUrl, {
+	        this.$http.jsonp(this.apiUrl + 'getData', {
 	            params: {
 	                'reqCollection': collectionName,
 	                'reqArea': searchArea

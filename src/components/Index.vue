@@ -45,7 +45,7 @@ export default {
     },
     mounted() {
         // console.log(this.$route.query.last);
-        this.$http.jsonp(this.apiUrl, {
+        this.$http.jsonp(this.apiUrl + 'getData', {
             params: {
                 'reqCollection': 'latest',
                 'reqArea': ''
