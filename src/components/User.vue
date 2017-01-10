@@ -105,15 +105,15 @@ export default {
         	switch(type){
         		//登录
         		case 1: 
-        			// this.$http.jsonp(this.signUri + 'signin', {
-                    this.$http.post('/signin', {
-                        // params: {
+        			this.$http.jsonp(this.signUri + 'signin', {
+                    // this.$http.post('/signin', {
+                        params: {
                             un: this.un,
                             pw: this.pw1
-                        // }
+                        }
 			        }).then((res) => {
-                        // let data = res.data;
-                        let data = JSON.parse(res.data);
+                        let data = res.data;
+                        // let data = JSON.parse(res.data);
 			            if(data.status == 200) {
 			            	this.initStatus();
 			            	this.userName = data.un;
@@ -136,15 +136,15 @@ export default {
 						this.showErr();
         				return false;
         			}
-                    // this.$http.jsonp(this.signUri + 'signup', {
-        			this.$http.post('/signup', {
-			            // params: {
+                    this.$http.jsonp(this.signUri + 'signup', {
+        			// this.$http.post('/signup', {
+			            params: {
 			                un: this.un,
 			                pw: this.pw1
-			            // }
+			            }
 			        }).then((res) => {
-			            // let data = res.data;
-                        let data = JSON.parse(res.data);
+			            let data = res.data;
+                        // let data = JSON.parse(res.data);
 			            if(data.status == 200) {
 			            	this.initStatus();
 			            	this.userName = data.un;
