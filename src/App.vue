@@ -16,8 +16,6 @@ import tips from './components/Tips'
 import user from './components/User'
 import loading from './components/Loading'
 
-
-
 export default {
     name: 'app',
     data() {

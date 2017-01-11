@@ -48,139 +48,57 @@
     </div>
 </template>
 <script>
-import GLOBAL_PATH from 'static/path.js'
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     data() {
         return {
-        	userName: '',
-            isSigned: false,
-            isSignIn: false,
-            isSignUp: false,
             un: '',
             pw1: '',
-            pw2: '',
-            status: '用户名或密码错误',
-            isErr: false,
-            signUri: GLOBAL_PATH.JSONP_URI,
-            hasSelectedCity: localStorage.city ? true : false,
-            city: localStorage.city || ''
+            pw2: ''
         }
     },
+    computed: {
+        ...mapState({
+            isSigned: state => state.user.isSigned,
+            userName: state => state.user.userName,
+            isSignIn: state => state.user.isSignIn,
+            isSignUp: state => state.user.isSignUp,
+            status: state => state.user.status,
+            isErr: state => state.user.isErr,
+            hasSelectedCity: state => state.user.hasSelectedCity,
+            city: state => state.user.city
+        })
+    },
     methods: {
-    	toSignIn() {
-    		this.initStatus();
-    		this.isSignIn = true; 
-    	},
-    	toSignUp() {
-    		this.initStatus();
-			this.isSignUp = true;
-    	},
-    	closePopup() {
-    		this.initStatus();
-    	},
-        cancelSignin() {
-        	this.userName = '';
-        	this.isSigned = false;
-            localStorage.removeItem('userInfo');
+        ...mapMutations(['cancelSignin','selectCity']),
+        ...mapActions(['changeStatus','initStatus','closePopup']),
+        checkInput(type) {
+            this.$store.dispatch({
+                type: 'checkInput', 
+                logType: type, 
+                un: this.un, 
+                pw1: this.pw1, 
+                pw2: this.pw2
+            });
         },
-        initStatus() {
-            this.isSignIn = false;
-            this.isSignUp = false;
+        toSignIn() {
             this.un = '';
             this.pw1 = '';
             this.pw2 = '';
-            this.status = '用户名或密码错误';
-            this.isErr = false;
+            this.$store.dispatch('toSignIn');
         },
-        showErr() {
-        	this.isErr = true;
-        },
-        checkInput(type) {
-        	this.isErr = false;
-        	if(!this.un || !this.pw1){
-        		this.showErr();
-        		return false;
-        	}
-        	switch(type){
-        		//登录
-        		case 1: 
-        			this.$http.jsonp(this.signUri + 'signin', {
-                    // this.$http.post('/signin', {
-                        params: {
-                            un: this.un,
-                            pw: this.pw1
-                        }
-			        }).then((res) => {
-                        let data = res.data;
-                        // let data = JSON.parse(res.data);
-			            if(data.status == 200) {
-			            	this.initStatus();
-			            	this.userName = data.un;
-			            	this.isSigned = true;
-                            this.setLocalstorage({
-                                userName : data.un,
-                                expire : new Date().getTime()+259200000
-                            });
-			            } else {
-			            	this.isErr = true;
-			            }
-			        }, (err) => {
-			            console.log(err);
-			        });
-        			break;
-        		//注册
-        		case 2:
-        			if(this.pw1 !== this.pw2){
-        				this.status = '用户名已存在或密码不相同';
-						this.showErr();
-        				return false;
-        			}
-                    this.$http.jsonp(this.signUri + 'signup', {
-        			// this.$http.post('/signup', {
-			            params: {
-			                un: this.un,
-			                pw: this.pw1
-			            }
-			        }).then((res) => {
-			            let data = res.data;
-                        // let data = JSON.parse(res.data);
-			            if(data.status == 200) {
-			            	this.initStatus();
-			            	this.userName = data.un;
-			            	this.isSigned = true;
-                            this.setLocalstorage({
-                                userName : data.un,
-                                expire : new Date().getTime()+259200000
-                            });
-			            } else {
-			            	this.status = '用户名已存在或密码不相同';
-			            	this.isErr = true;
-			            }
-			        }, (err) => {
-			            console.log(err);
-			        });
-        			break;
-        	}
-        },
-        setLocalstorage(userInfo) {
-            localStorage.userInfo = JSON.stringify(userInfo);
-        },
-        selectCity() {
-            this.hasSelectedCity = !this.hasSelectedCity;
-            // this.city = '广州';
+        toSignUp() {
+            this.un = '';
+            this.pw1 = '';
+            this.pw2 = '';
+            this.$store.dispatch('toSignUp');
         }
     },
     mounted() {
-        if(localStorage.userInfo == undefined){
-            return ;
-        }
-        let userInfo = JSON.parse(localStorage.userInfo),
-            expire = (new Date()).getTime();
-        if(userInfo.userName && (userInfo.expire - expire >= 0)){
-            this.userName = userInfo.userName;
-            this.isSigned = true;
-        }
+        this.initStatus();
     }
 }
 </script>

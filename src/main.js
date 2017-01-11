@@ -2,13 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import vueRouter from 'vue-router'
-import vueResource from 'vue-resource'
+import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
+import store from './store/index'
 // import elementUI from 'element-ui'
 // import 'element-ui/lib/theme-default/index.css'
 
-Vue.use(vueResource);
-Vue.use(vueRouter);
+Vue.use(VueResource);
+Vue.use(VueRouter);
 // Vue.use(elementUI);
 
 // const Hello = require('./components/Hello.vue');
@@ -17,17 +18,17 @@ Vue.use(vueRouter);
 
 const routes = [{
     path: '/Hello',
-    component: function(resolve){
+    component: function(resolve) {
         require(['./components/Hello'], resolve);
     }
 }, {
     path: '/Index',
-    component: function(resolve){
+    component: function(resolve) {
         require(['./components/Index'], resolve);
     }
 }, {
     path: '/Details',
-    component: function(resolve){
+    component: function(resolve) {
         require(['./components/Details'], resolve);
     }
 }, {
@@ -35,7 +36,7 @@ const routes = [{
     redirect: '/Hello'
 }];
 
-const router = new vueRouter({
+const router = new VueRouter({
     routes
 });
 
@@ -44,5 +45,6 @@ new Vue({
     el: '#app',
     template: '<App/>',
     router,
+    store,
     components: { App }
 })

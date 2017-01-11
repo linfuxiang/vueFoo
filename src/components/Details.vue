@@ -76,7 +76,6 @@ export default {
         // this.$parent.isShowLoading = true;
     },
     beforeRouteLeave (to, from, next) {
-        console.log(1);
         this.$parent.isShowLoading = true;
         next();
         // 在渲染该组件的对应路由被 confirm 前调用
