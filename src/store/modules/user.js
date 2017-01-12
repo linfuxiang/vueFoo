@@ -13,36 +13,42 @@ export default {
         status: '用户名或密码错误',
         isErr: false,
         hasSelectedCity: localStorage.city ? true : false,
-        city: localStorage.city || ''
+        city: localStorage.city || '',
+        un: '',
+        pw1: '',
+        pw2: ''
     },
     mutations: {
-        updateMessage(state, message) {
+        user_updateMessage(state, message) {
             state.pw1 = message;
         },
-        changeStatus(state) {
+        user_changeStatus(state) {
             state.isSigned = !state.isSigned;
         },
-        toSignIn(state) {
+        user_toSignIn(state) {
             state.isSignIn = true;
         },
-        toSignUp(state) {
+        user_toSignUp(state) {
             state.isSignUp = true;
         },
-        cancelSignin(state) {
+        user_cancelSignin(state) {
             state.userName = '';
             state.isSigned = false;
             localStorage.removeItem('userInfo');
         },
-        showErr(state, args) {
+        user_showErr(state, args) {
         	state.isErr = true;
         	if(args){
 				state.status = '用户名已存在或密码不相同';
         	}
         },
-       	hideErr(state) {
+       	user_hideErr(state) {
             state.isErr = false;
         },
-        resetStatus(state) {
+        user_resetStatus(state) {
+        	state.un = '';
+        	state.pw1 = '';
+        	state.pw2 = '';
             state.isSigned = false;
             state.userName = '';
             state.isSignIn = false;
@@ -50,7 +56,7 @@ export default {
             state.status = '用户名或密码错误';
             state.isErr = false;
         },
-        initStatus(state) {
+        user_initStatus(state) {
             if (localStorage.userInfo != undefined) {
                 let userInfo = JSON.parse(localStorage.userInfo),
                     expire = (new Date()).getTime();
@@ -64,57 +70,67 @@ export default {
                 }
             }
         },
-        selectCity(state) {
+        user_selectCity(state) {
             state.hasSelectedCity = !state.hasSelectedCity;
         },
-        setUserInfo(state, args) {
+        user_setUserInfo(state, args) {
         	state.userName = args.un;
             state.isSigned = true;
             state.isSignIn = false;
 			state.isSignUp = false;
+        },
+        user_update_un(state, val) {
+        	state.un = val
+        },
+        user_update_pw1(state, val) {
+        	state.pw1 = val
+        },
+        user_update_pw2(state, val) {
+        	state.pw2 = val
         }
     },
     actions: {
-        toSignIn({ commit }) {
-            commit('resetStatus');
-            commit('toSignIn');
+        user_toSignIn({ commit }) {
+            commit('user_resetStatus');
+            commit('user_toSignIn');
         },
-        toSignUp({ commit }) {
-            commit('resetStatus');
-            commit('toSignUp');
+        user_toSignUp({ commit }) {
+            commit('user_resetStatus');
+            commit('user_toSignUp');
         },
-        closePopup({ commit }) {
-            commit('resetStatus');
+        user_closePopup({ commit }) {
+            commit('user_resetStatus');
         },
-        resetStatus({ commit }) {
-            commit('resetStatus');
+        user_resetStatus({ commit }) {
+            commit('user_resetStatus');
         },
-        initStatus({ commit }) {
-            commit('resetStatus');
-            commit('initStatus');
+        user_initStatus({ commit }) {
+            commit('user_resetStatus');
+            commit('user_initStatus');
         },
-        checkInput({ commit }, args) {
-        	commit('hideErr');
-        	if (!args.un || !args.pw1) {
-                commit('showErr');
+        user_checkInput({ commit, state }, logType) {
+        	commit('user_hideErr');
+        	if (!state.un || !state.pw1) {
+                commit('user_showErr');
                 return false;
             }
-            switch (args.logType) {
+            commit('toggleLoading');
+            switch (logType) {
                 //登录
                 case 1:
                     Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signin', {
                         // this.$http.post('/signin', {
                         params: {
-                            un: args.un,
-                            pw: args.pw1
+                            un: state.un,
+                            pw: state.pw1
                         }
                     }).then((res) => {
                         let data = res.data;
-                        console.log(data.un)
+                        // console.log(data.un)
                         // let data = JSON.parse(res.data);
                         if (data.status == 200) {
                             commit({
-                            	type: 'setUserInfo',
+                            	type: 'user_setUserInfo',
                             	un: data.un
                         	});
                             localStorage.userInfo = JSON.stringify({
@@ -122,33 +138,36 @@ export default {
                                 expire: new Date().getTime() + 259200000
                             });
                         } else {
-                        	commit('showErr');
+                        	commit('user_showErr');
                         }
+                        commit('toggleLoading');
                     }, (err) => {
                         console.log(err);
+                        commit('toggleLoading');
                     });
                     break;
                     //注册
                 case 2:
-                    if (args.pw1 !== args.pw2) {
+                    if (state.pw1 !== state.pw2) {
                         commit({
-                        	type: 'showErr',
+                        	type: 'user_showErr',
                         	text: '用户名已存在或密码不相同'
                         });
+                        commit('toggleLoading');
                         return false;
                     }
                     Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signup', {
                         // this.$http.post('/signup', {
                         params: {
-                            un: args.un,
-                            pw: args.pw1
+                            un: state.un,
+                            pw: state.pw1
                         }
                     }).then((res) => {
                         let data = res.data;
                         // let data = JSON.parse(res.data);
                         if (data.status == 200) {
                             commit({
-                            	type: 'setUserInfo',
+                            	type: 'user_setUserInfo',
                             	un: data.un
                         	});
                             localStorage.userInfo = JSON.stringify({
@@ -157,12 +176,14 @@ export default {
                             });
                         } else {
                             commit({
-	                        	type: 'showErr',
+	                        	type: 'user_showErr',
 	                        	text: '用户名已存在或密码不相同'
 	                        });                        
                         }
+                        commit('toggleLoading');
                     }, (err) => {
                         console.log(err);
+                        commit('toggleLoading');
                     });
                     break;
             }

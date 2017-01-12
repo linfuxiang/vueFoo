@@ -1,21 +1,34 @@
 // import 'babel-polyfill'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import hello from './modules/hello'
+import charts from './modules/charts'
+import navi from './modules/navi'
 import user from './modules/user'
+import details from './modules/details'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-	strict: process.env.NODE_ENV !== 'production',
+    strict: process.env.NODE_ENV !== 'production',
     state: {
-        count: 2
+        isMobile: false,
+        isShowLoading: true
     },
     mutations: {
-        increment(state) {
-            state.count++
+        setMobile(state, bool) {
+        	state.isMobile = bool;
+        },
+        toggleLoading(state) {
+        	state.isShowLoading = !state.isShowLoading;
         }
     },
     modules: {
-    	user
+        hello,
+    	charts,
+    	navi,
+        user,
+        details
     }
+
 })

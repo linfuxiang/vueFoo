@@ -1,7 +1,7 @@
 <template>
     <div class="nav">
         <ul>
-            <li v-for="item in navLists" @click="toAjax">
+            <li v-for="item in navLists">
                 <!-- <router-link active-class="active" :to="{path:'/' + item.link,query:{last: item.link}}">{{item.linkName}}</router-link> -->
                 <router-link active-class="active" :to="{path:'/' + item.link}">{{item.linkName}}</router-link>
             </li>
@@ -15,55 +15,22 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+
 export default {
     data() {
         return {
-            // active: '',
-            navLists: [{
-                linkName: '欢迎页',
-                link: 'Hello'
-            }, {
-                linkName: '首页',
-                link: 'Index'
-            }, {
-                linkName: '详细数据',
-                link: 'details'
-            }],
-            set: new Set()
         }
+    },
+    computed: {
+        ...mapState({
+            navLists: state => state.navi.navLists,
+        })
     },
     methods: {
-        toAjax() {
-            // console.log(this.$http.get)
-        },
-        changeRoutes() {
-            // this.$parent.isShowLoading = true;
-            // console.log(1);
-        },
-        foo() {
-            // if([...this.set].includes(this.$route.path)){
-
-            // } else {
-            //     this.$parent.isShowLoading = true;
-            //     this.set.add(this.$route.path);
-            // }
-            console.log('click');
-        }
     },
     mounted() {
-        // this.set = new Set();
         this.$watch('$route.path', function (newVal, oldVal) {
-            // this.$parent.isShowLoading = false;
-            // let path = this.$route.path;
-            // this.active = path;
-            // if([...this.set].includes(path)){
-            //     this.$parent.needShowLoading = false;
-            //     console.log('ok');
-            // } else {
-            //     this.$parent.needShowLoading = true;
-            //     console.log('no');
-            //     this.set.add(path);
-            // }
         });
     }
 }

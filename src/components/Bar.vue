@@ -1,11 +1,12 @@
 <template>
-    <div class="top">
+    <div class="bar">
         <div id="best20" style="width: 1100px;height: 400px;"></div>
         <div id="worst20" style="width: 1100px;height: 400px;"></div>
     </div>
 </template>
 <script>
-import echarts from 'echarts';
+import echarts from 'echarts'
+import { mapState } from 'vuex'
 
 export default {
     data() {
@@ -18,11 +19,13 @@ export default {
         	worstY: []
         }
     },
+    computed: {
+        ...mapState({
+            jsonData: state => state.charts.jsonData
+        })
+    },
     methods: {
     },
-    props:[
-    	'jsonData'
-    ],
     mounted() {
 		this.best20 = echarts.init(document.getElementById('best20')), 
 		this.worst20 = echarts.init(document.getElementById('worst20'));

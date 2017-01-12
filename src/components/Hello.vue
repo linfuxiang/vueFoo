@@ -1,34 +1,34 @@
 <template>
     <div class="hello">
-        <h1>{{ msg }}</h1>
+        <h1>{{ title }}</h1>
     </div>
 </template>
 <script>
-
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
     data() {
         return {
-            msg: 'Welcome to Air Quality Monitoring Platform'
         }
     },
-    props:[
-        'isShowLoading'
-    ],
+    computed: {
+        ...mapState({
+            title: state => state.hello.title,
+        })
+    },
+    methods: {
+        ...mapMutations(['toggleLoading']),
+    },
     mounted() {
-        // console.log('open');
-        this.$parent.isShowLoading = false;
+        this.toggleLoading();
     },
     activated() {
-        // console.log('open');
-        // this.$parent.isShowLoading = false;
     },
     deactivated() {
-        // console.log('closed');
-        // this.$parent.isShowLoading = true;
     },
     beforeRouteLeave (to, from, next) {
-        this.$parent.isShowLoading = true;
+        this.toggleLoading();
         next();
         // 在渲染该组件的对应路由被 confirm 前调用
         // 不！能！获取组件实例 `this`

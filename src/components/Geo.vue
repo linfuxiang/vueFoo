@@ -4,8 +4,9 @@
     </div>
 </template>
 <script>
-import echarts from 'echarts';
-import echartsChinaMap from 'echarts/map/js/china';
+import echarts from 'echarts'
+import echartsChinaMap from 'echarts/map/js/china'
+import { mapState } from 'vuex'
 
 export default {
     data() {
@@ -13,12 +14,14 @@ export default {
             
         }
     },
+    computed: {
+        ...mapState({
+            jsonData: state => state.charts.jsonData
+        })
+    },
     methods: {
         
     },
-    props:[
-    	'jsonData'
-    ],
     mounted() {
         // this.$watch('jsonData', function (newVal, oldVal) {
             var data = [];

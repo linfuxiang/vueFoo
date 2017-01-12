@@ -2,7 +2,7 @@
     <div id="app" v-if="!isMobile">
         <navi></navi>
         <!-- <keep-alive> -->
-            <router-view :isShowLoading="isShowLoading"></router-view>
+            <router-view></router-view>
         <!-- </keep-alive> -->
         <tips></tips>
         <user></user>
@@ -15,21 +15,28 @@ import navi from './components/Navi'
 import tips from './components/Tips'
 import user from './components/User'
 import loading from './components/Loading'
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
     name: 'app',
     data() {
         return {
-            isMobile: '',
-            isShowLoading: false,
-            needShowLoading: true
+            
         }
     },
+    computed: mapState([
+        'isMobile',
+        'isShowLoading'
+    ]),
     components: {
         navi,
         tips,
         user,
         loading
+    },
+    methods: {
+        ...mapMutations(['setMobile', 'toggleLoading'])
     },
     mounted() {
         // 没做移动端适配前，判断是否手机浏览器
@@ -37,7 +44,7 @@ export default {
             isAndroid = /android|adr/gi.test(UA),
             isIos = /iphone|ipod|ipad/gi.test(UA) && !isAndroid,
             isMobile = isAndroid || isIos;
-        this.isMobile = isMobile;
+        this.setMobile(isMobile);
         if(isMobile){
             return false;
         }

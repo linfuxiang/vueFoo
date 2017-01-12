@@ -1,8 +1,8 @@
 <template>
     <div class="details">
         <h1>{{ msg }}</h1>
-        <input v-model="searchArea" @keyup.enter="search" placeholder="输入为空则搜索全部数据">
-        <button @click="search" :disabled="!abledToSearch" :class="{unabled: !abledToSearch}">搜索</button>
+        <input v-model="searchArea" @keyup.enter="details_search" placeholder="输入为空则搜索全部数据">
+        <button @click="details_search" :disabled="!abledToSearch" :class="{unabled: !abledToSearch}">搜索</button>
         <table cellspacing="0">
         	<tr>
         		<th>排序</th>
@@ -13,70 +13,52 @@
         	<tr v-for="(val, idx) in jsonData" :id="val.city">
         		<td>{{idx + 1}}</td>
         		<td>{{val.city}}</td>
-        		<td :class="[foo(val.situ)]">{{val.num}}</td>
-        		<!-- <td :class="[('level' + ((val.situ=='优')?1:(val.situ=='良')?2:(val.situ=='轻度污染')?3:(val.situ=='中度污染')?4:(val.situ=='重度污染')?5:6))]">{{val.situ}}</td> -->
-        		<td :class="[foo(val.situ)]">{{val.situ}}</td>
+        		<td :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">{{val.num}}</td>
+        		<td :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">{{val.situ}}</td>
         	</tr>
         </table>
     </div>
 </template>
 <script>
 import GLOBAL_PATH from 'static/path.js'
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     data() {
         return {
-            msg: '详细数据报表',
-            apiUrl: GLOBAL_PATH.JSONP_URI,
-            jsonData: [],
-            searchArea: '',
-            lastSearchArea: null,
-            abledToSearch: true
         }
     },
-    methods: {
-    	foo(situ) {
-			return ('level' + ((situ=='优')?1:(situ=='良')?2:(situ=='轻度污染')?3:(situ=='中度污染')?4:(situ=='重度污染')?5:6));
-    	},
-    	search() {
-    		let searchArea = this.searchArea.trim();
-    		if(this.lastSearchArea === searchArea || this.abledToSearch === false){
-    			return false;
-    		}
-    		this.abledToSearch = false;
-    		// let today = new Date();
-	        // let collectionName = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + ':00';
-	        let collectionName = 'latest';
-	        this.$http.jsonp(this.apiUrl + 'getData', {
-	            params: {
-	                'reqCollection': collectionName,
-	                'reqArea': searchArea
-	            }
-	        }).then((res) => {
-	            this.jsonData = res.data.data;
-	            this.lastSearchArea = searchArea;
-	            this.abledToSearch = true;
-	        }, (err) => {
-	            console.log(err);
-	        });
+    computed: {
+    	...mapState({
+    		msg: state => state.details.msg,
+    		jsonData: state => state.details.jsonData,
+    		lastSearchArea: state => state.details.lastSearchArea,
+    		abledToSearch: state => state.details.abledToSearch,
+    	}),
+    	searchArea: {
+    		get () {
+		      	return this.$store.state.details.searchArea
+		    },
+		    set (value) {
+		      	this.$store.commit('details_update_searchArea', value)
+		    }
     	}
     },
+    methods: {
+    	...mapMutations(['toggleLoading']),
+    	...mapActions(['details_search']),
+    },
     mounted() {
-    	// console.log(GLOBAL_PATH);
-        // console.log(this.$route.query.last);
-        // console.log('open');
-        this.$parent.isShowLoading = false;
+        this.toggleLoading();
     },
     activated() {
-        // console.log('open');
-        // this.$parent.isShowLoading = false;
     },
     deactivated() {
-        // console.log('closed');
-        // this.$parent.isShowLoading = true;
     },
     beforeRouteLeave (to, from, next) {
-        this.$parent.isShowLoading = true;
+        this.toggleLoading();
         next();
         // 在渲染该组件的对应路由被 confirm 前调用
         // 不！能！获取组件实例 `this`

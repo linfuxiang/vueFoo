@@ -2,33 +2,33 @@
     <div class="user">
         <div class="userInfo">
             <div class="sign" v-if="!isSigned">
-                <a href="" @click.prevent="toSignIn">登录</a>
+                <a href="" @click.prevent="user_toSignIn">登录</a>
                 <span>/</span>
-                <a href="" @click.prevent="toSignUp">注册</a>
+                <a href="" @click.prevent="user_toSignUp">注册</a>
             </div>
             <div class="signed" v-else>
                 <span>用户：{{userName}}</span>
-                <a href="" @click.prevent="cancelSignin">登出</a>
+                <a href="" @click.prevent="user_cancelSignin">登出</a>
             </div>
-            <div v-show="hasSelectedCity">默认城市：{{city}}<span @click="selectCity">[重选]</span></div>
-            <div v-show="!hasSelectedCity" @click="selectCity">[选择城市]</div>
+            <div v-show="hasSelectedCity">默认城市：{{city}}<span @click="user_selectCity">[重选]</span></div>
+            <div v-show="!hasSelectedCity" @click="user_selectCity">[选择城市]</div>
         </div>
     	
         <div class="b_signin" v-if="isSignIn">
-            <i @click="closePopup">×</i>
+            <i @click="user_closePopup">×</i>
             <h2>登录</h2>
             <label for="un">用户名</label>
             <input name="un" type="text" v-model.trim="un">
             <label for="pw">密码</label>
             <input name="pw" type="password" v-model.trim="pw1">
             <div v-show="isErr">{{status}}</div>
-            <input type="button" value="登录" @click="checkInput(1)">
+            <input type="button" value="登录" @click="user_checkInput(1)">
             <div>
-                <a href="" @click.prevent="toSignUp">没有账号，去注册</a>
+                <a href="" @click.prevent="user_toSignUp">没有账号，去注册</a>
             </div>
         </div>
         <div class="b_signup" v-if="isSignUp">
-        	<i @click="closePopup">×</i>
+        	<i @click="user_closePopup">×</i>
         	<h2>注册</h2>
         	<label for="un">用户名</label>
         	<input name="un" type="text" v-model.trim="un">
@@ -37,9 +37,9 @@
         	<label for="pw2">确认密码</label>
         	<input name="pw2" type="password" v-model.trim="pw2">
         	<div v-show="isErr">{{status}}</div>
-        	<input type="button" value="注册" @click="checkInput(2)">
+        	<input type="button" value="注册" @click="user_checkInput(2)">
         	<div>
-        		<a href="" @click.prevent="toSignIn">已有账号，去登录</a>
+        		<a href="" @click.prevent="user_toSignIn">已有账号，去登录</a>
         	</div>
         </div>
         <div class="b_city" v-if="">
@@ -55,9 +55,6 @@ import { mapActions } from 'vuex'
 export default {
     data() {
         return {
-            un: '',
-            pw1: '',
-            pw2: ''
         }
     },
     computed: {
@@ -70,35 +67,38 @@ export default {
             isErr: state => state.user.isErr,
             hasSelectedCity: state => state.user.hasSelectedCity,
             city: state => state.user.city
-        })
-    },
-    methods: {
-        ...mapMutations(['cancelSignin','selectCity']),
-        ...mapActions(['changeStatus','initStatus','closePopup']),
-        checkInput(type) {
-            this.$store.dispatch({
-                type: 'checkInput', 
-                logType: type, 
-                un: this.un, 
-                pw1: this.pw1, 
-                pw2: this.pw2
-            });
+        }),
+        un: {
+            get () {
+                return this.$store.state.user.un
+            },
+            set (value) {
+                this.$store.commit('user_update_un', value)
+            }
         },
-        toSignIn() {
-            this.un = '';
-            this.pw1 = '';
-            this.pw2 = '';
-            this.$store.dispatch('toSignIn');
+        pw1: {
+            get () {
+                return this.$store.state.user.pw1
+            },
+            set (value) {
+                this.$store.commit('user_update_pw1', value)
+            }
         },
-        toSignUp() {
-            this.un = '';
-            this.pw1 = '';
-            this.pw2 = '';
-            this.$store.dispatch('toSignUp');
+        pw2: {
+            get () {
+                return this.$store.state.user.pw2
+            },
+            set (value) {
+                this.$store.commit('user_update_pw2', value)
+            }
         }
     },
+    methods: {
+        ...mapMutations(['user_cancelSignin', 'user_selectCity']),
+        ...mapActions(['user_changeStatus', 'user_initStatus', 'user_closePopup', 'user_checkInput', 'user_toSignIn', 'user_toSignUp']),
+    },
     mounted() {
-        this.initStatus();
+        this.user_initStatus();
     }
 }
 </script>

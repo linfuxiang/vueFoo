@@ -3,17 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
+// import VueResource from 'vue-resource'
 import store from './store/index'
 // import elementUI from 'element-ui'
 // import 'element-ui/lib/theme-default/index.css'
 
-Vue.use(VueResource);
+// Vue.use(VueResource);
 Vue.use(VueRouter);
 // Vue.use(elementUI);
 
 // const Hello = require('./components/Hello.vue');
-// const Index = require('./components/Index.vue');
+// const Charts = require('./components/Charts.vue');
 // const Details = require('./components/Details.vue');
 
 const routes = [{
@@ -22,9 +22,9 @@ const routes = [{
         require(['./components/Hello'], resolve);
     }
 }, {
-    path: '/Index',
+    path: '/Charts',
     component: function(resolve) {
-        require(['./components/Index'], resolve);
+        require(['./components/Charts'], resolve);
     }
 }, {
     path: '/Details',
