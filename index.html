@@ -21,6 +21,9 @@
 	        var cityName = result.name;
 	        // map.setCenter(cityName);
 	        console.log(cityName);
+	        if(cityName == '全国'){
+	        	return ;
+	        }
 	        localStorage.city = cityName;
 	    }
 	    var myCity = new BMap.LocalCity();

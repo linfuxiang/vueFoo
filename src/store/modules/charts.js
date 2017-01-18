@@ -8,9 +8,12 @@ export default {
     state: {
         header: '实时空气质量指数(AQI)监测',
         jsonData: [],
-        showWhichComponent: 'top'
+        showWhichComponent: ''
     },
     mutations: {
+        charts_initComponent(state) {
+            state.showWhichComponent = 'top';
+        },
     	charts_change(state) {
             if(state.showWhichComponent == 'top'){
                 state.showWhichComponent = 'geo';
@@ -23,7 +26,12 @@ export default {
         }
     },
     actions: {
-    	charts_getData({commit}) {
+    	charts_getData({commit, state}) {
+            if(state.jsonData.length > 0){
+                commit('global_toggleLoading');
+                commit('charts_initComponent');
+                return ;
+            }
 			Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
 			    params: {
 			        'reqCollection': 'latest',
@@ -34,10 +42,11 @@ export default {
 			    	type: 'charts_changeData',
 			    	data: res.data.data
 			    });
-			    commit('toggleLoading');
+			    commit('global_toggleLoading');
+                commit('charts_initComponent');
 			}, (err) => {
 			    console.log(err);
-			    commit('toggleLoading');
+			    commit('global_toggleLoading');
 			});
     	}    	
     }

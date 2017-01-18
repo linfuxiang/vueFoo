@@ -5,6 +5,7 @@ import hello from './modules/hello'
 import charts from './modules/charts'
 import navi from './modules/navi'
 import user from './modules/user'
+import city from './modules/city'
 import details from './modules/details'
 
 Vue.use(Vuex)
@@ -16,10 +17,10 @@ export default new Vuex.Store({
         isShowLoading: true
     },
     mutations: {
-        setMobile(state, bool) {
+        global_setMobile(state, bool) {
         	state.isMobile = bool;
         },
-        toggleLoading(state) {
+        global_toggleLoading(state) {
         	state.isShowLoading = !state.isShowLoading;
         }
     },
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     	charts,
     	navi,
         user,
+        city,
         details
     }
 

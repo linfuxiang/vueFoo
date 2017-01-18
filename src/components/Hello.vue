@@ -18,17 +18,17 @@ export default {
         })
     },
     methods: {
-        ...mapMutations(['toggleLoading']),
+        ...mapMutations(['global_toggleLoading']),
     },
     mounted() {
-        this.toggleLoading();
+        this.global_toggleLoading();
     },
     activated() {
     },
     deactivated() {
     },
     beforeRouteLeave (to, from, next) {
-        this.toggleLoading();
+        this.global_toggleLoading();
         next();
         // 在渲染该组件的对应路由被 confirm 前调用
         // 不！能！获取组件实例 `this`

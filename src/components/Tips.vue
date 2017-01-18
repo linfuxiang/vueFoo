@@ -1,10 +1,9 @@
 <template>
-    <div class="">
+    <div class="tips">
+    	<h1 class="tip">Tips</h1>
+    	<div class="text">空气质量指数（Air Quality Index，简称AQI）是定量描述空气质量状况的指数，分为五级，相对应空气质量的六个类别，其数值越大说明空气污染状况越严重，对人体健康的危害也就越大。参与空气质量评价的主要污染物为细颗粒物（pm2.5）、可吸入颗粒物（pm10）、二氧化硫（SO2）、二氧化氮（NO2）、臭氧（O3）、一氧化碳（CO）等六项。</div>
         <table cellspacing="0" class="m10">
             <tr>
-            	<th rowspan="7" class="tip">
-            		Tips
-            	</th>
                 <th class="th-1st">指数</th>
                 <th class="th-2nd">等级</th>
                 <th class="th-3rd">空气质量查询网温馨提示</th>
@@ -72,71 +71,78 @@ export default {
 	@mixin transitionOpt($time: 1s){
 		transition: all $time;
 	}
-
-	table{
-		width: 700px;
+	.tips{
+		// background: white;
 		position: fixed;
-		font-size: 14px;
-		right: -670px;
 		bottom: 0px;
+		right: -700px;
+		width: 700px;
+		font-size: 14px;
 		@include transitionOpt;
 		&:hover{
-			th:nth-of-type(1){
+			h1{
 				opacity: 0;
 			}
 			right: 0px;
 		}
-		th{
+		.tip{
+			width: 80px;
+			margin-left: -80px;
+			background-color: transparent;
+			color: black;
 			@include transitionOpt;
-			background-color: $thBgColor;
-			color: $thFontColor;
-			padding: 2px 0;
-			&:nth-of-type(1){
-				width: 30px;
-				background-color: transparent;
-				color: black;
-				vertical-align: top;
+		}
+		.text{
+			text-align: left;
+    		text-indent: 28px;
+		}
+		table{
+			th{
+				background-color: $thBgColor;
+				color: $thFontColor;
+				padding: 2px 0;
+				&:nth-of-type(1){
+					width: 70px;
+				}
+				&:nth-of-type(2){
+					width: 130px;
+				}
+				&:nth-of-type(3){
+					width: 500px;
+				}
 			}
-			&:nth-of-type(2){
-				width: 60px;
+			td{
+				background-color: white;
 			}
-			&:nth-of-type(3){
-				width: 110px;
+			.level1{
+				color: $level1BgColor;
 			}
-			&:nth-of-type(4){
-				width: 500px;
+			.level2{
+				color: $level2BgColor;
 			}
-		}
-		td{
-			background-color: white;
-		}
-		.level1{
-			color: $level1BgColor;
-		}
-		.level2{
-			color: $level2BgColor;
-		}
-		.level3{
-			color: $level3BgColor;
-		}
-		.level4{
-			color: $level4BgColor;
-		}
-		.level5{
-			color: $level5BgColor;
-		}
-		.level6{
-			color: $level6BgColor;
-		}
-		tr:nth-of-type(odd){
-			// background-color: #D3FFDF;
-		}
-		tr:nth-of-type(even){
-			// background-color: #FFE9C4;
-		}
-		tr:not(:first-child):hover{
-			background-color: #D3FFDF;
+			.level3{
+				color: $level3BgColor;
+			}
+			.level4{
+				color: $level4BgColor;
+			}
+			.level5{
+				color: $level5BgColor;
+			}
+			.level6{
+				color: $level6BgColor;
+			}
+			tr:nth-of-type(odd){
+				// background-color: #D3FFDF;
+			}
+			tr:nth-of-type(even){
+				// background-color: #FFE9C4;
+			}
+			tr:not(:first-child):hover{
+				background-color: #D3FFDF;
+			}
 		}
 	}
+	
 	
 </style>

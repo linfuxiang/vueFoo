@@ -36,7 +36,7 @@ export default {
         loading
     },
     methods: {
-        ...mapMutations(['setMobile', 'toggleLoading'])
+        ...mapMutations(['global_setMobile', 'global_toggleLoading'])
     },
     mounted() {
         // 没做移动端适配前，判断是否手机浏览器
@@ -44,7 +44,7 @@ export default {
             isAndroid = /android|adr/gi.test(UA),
             isIos = /iphone|ipod|ipad/gi.test(UA) && !isAndroid,
             isMobile = isAndroid || isIos;
-        this.setMobile(isMobile);
+        this.global_setMobile(isMobile);
         if(isMobile){
             return false;
         }

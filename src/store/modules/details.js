@@ -10,10 +10,9 @@ export default {
         jsonData: [],
         searchArea: localStorage.city ? localStorage.city : '',
         lastSearchArea: null,
-        abledToSearch: true
+        abledToSearch: true,
     },
     mutations: {
-
         details_toggleSearch(state) {
             state.abledToSearch = !state.abledToSearch;
         },
@@ -23,7 +22,7 @@ export default {
         },
         details_update_searchArea(state, val) {
             state.searchArea = val
-        }
+        },
     },
     actions: {
         details_search({ commit, state }) {
@@ -31,7 +30,7 @@ export default {
             if (state.lastSearchArea === searchArea || state.abledToSearch === false) {
                 return false;
             }
-            commit('toggleLoading');
+            commit('global_toggleLoading');
             commit('details_toggleSearch');
             // let today = new Date();
             // let collectionName = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + ':00';
@@ -42,7 +41,7 @@ export default {
                     'reqArea': searchArea
                 }
             }).then((res) => {
-                commit('toggleLoading');
+                commit('global_toggleLoading');
                 commit({
                     type: 'details_successSearch',
                     jsonData: res.data.data,
@@ -51,7 +50,7 @@ export default {
                 commit('details_toggleSearch');
             }, (err) => {
                 commit('details_toggleSearch');
-                commit('toggleLoading');
+                commit('global_toggleLoading');
                 console.log(err);
             });
         }

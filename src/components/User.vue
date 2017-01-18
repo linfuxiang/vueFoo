@@ -10,10 +10,9 @@
                 <span>用户：{{userName}}</span>
                 <a href="" @click.prevent="user_cancelSignin">登出</a>
             </div>
-            <div v-show="hasSelectedCity">默认城市：{{city}}<span @click="user_selectCity">[重选]</span></div>
-            <div v-show="!hasSelectedCity" @click="user_selectCity">[选择城市]</div>
+            <city></city>
         </div>
-    	
+
         <div class="b_signin" v-if="isSignIn">
             <i @click="user_closePopup">×</i>
             <h2>登录</h2>
@@ -42,19 +41,22 @@
         		<a href="" @click.prevent="user_toSignIn">已有账号，去登录</a>
         	</div>
         </div>
-        <div class="b_city" v-if="">
-            <div></div>
-        </div>
     </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 import { mapActions } from 'vuex'
+// import city from './City'
 
 export default {
     data() {
         return {
+        }
+    },
+    components: {
+        city: function(resolve){
+            require(['./City'], resolve);
         }
     },
     computed: {
@@ -65,8 +67,6 @@ export default {
             isSignUp: state => state.user.isSignUp,
             status: state => state.user.status,
             isErr: state => state.user.isErr,
-            hasSelectedCity: state => state.user.hasSelectedCity,
-            city: state => state.user.city
         }),
         un: {
             get () {

@@ -1,6 +1,6 @@
 <template>
     <div class="geo">
-        <div id="geo" style="width: 800px;height: 600px;"></div>
+        <div ref="geo" style="width: 800px;height: 600px;"></div>
     </div>
 </template>
 <script>
@@ -158,7 +158,8 @@ export default {
                     zlevel: 1
                 }]
             };
-            var map = echarts.init(document.getElementById('geo'));
+            // var map = echarts.init(document.getElementById('geo'));
+            var map = echarts.init(this.$refs.geo);
             map.setOption(option);
         // });
     }
@@ -166,7 +167,9 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#geo{
-	margin: 0 auto;
+.geo{
+    div{
+        margin: 0 auto;
+    }
 }
 </style>

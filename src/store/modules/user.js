@@ -12,11 +12,9 @@ export default {
         isSignUp: false,
         status: '用户名或密码错误',
         isErr: false,
-        hasSelectedCity: localStorage.city ? true : false,
-        city: localStorage.city || '',
         un: '',
         pw1: '',
-        pw2: ''
+        pw2: '',
     },
     mutations: {
         user_updateMessage(state, message) {
@@ -70,9 +68,6 @@ export default {
                 }
             }
         },
-        user_selectCity(state) {
-            state.hasSelectedCity = !state.hasSelectedCity;
-        },
         user_setUserInfo(state, args) {
         	state.userName = args.un;
             state.isSigned = true;
@@ -114,7 +109,7 @@ export default {
                 commit('user_showErr');
                 return false;
             }
-            commit('toggleLoading');
+            commit('global_toggleLoading');
             switch (logType) {
                 //登录
                 case 1:
@@ -140,10 +135,10 @@ export default {
                         } else {
                         	commit('user_showErr');
                         }
-                        commit('toggleLoading');
+                        commit('global_toggleLoading');
                     }, (err) => {
                         console.log(err);
-                        commit('toggleLoading');
+                        commit('global_toggleLoading');
                     });
                     break;
                     //注册
@@ -153,7 +148,7 @@ export default {
                         	type: 'user_showErr',
                         	text: '用户名已存在或密码不相同'
                         });
-                        commit('toggleLoading');
+                        commit('global_toggleLoading');
                         return false;
                     }
                     Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signup', {
@@ -180,10 +175,10 @@ export default {
 	                        	text: '用户名已存在或密码不相同'
 	                        });                        
                         }
-                        commit('toggleLoading');
+                        commit('global_toggleLoading');
                     }, (err) => {
                         console.log(err);
-                        commit('toggleLoading');
+                        commit('global_toggleLoading');
                     });
                     break;
             }

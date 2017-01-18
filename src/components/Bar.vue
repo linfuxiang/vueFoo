@@ -1,7 +1,7 @@
 <template>
     <div class="bar">
-        <div id="best20" style="width: 1100px;height: 400px;"></div>
-        <div id="worst20" style="width: 1100px;height: 400px;"></div>
+        <div ref="best20" style="width: 1100px;height: 400px;"></div>
+        <div ref="worst20" style="width: 1100px;height: 400px;"></div>
     </div>
 </template>
 <script>
@@ -27,8 +27,10 @@ export default {
     methods: {
     },
     mounted() {
-		this.best20 = echarts.init(document.getElementById('best20')), 
-		this.worst20 = echarts.init(document.getElementById('worst20'));
+		// this.best20 = echarts.init(document.getElementById('best20')), 
+		// this.worst20 = echarts.init(document.getElementById('worst20'));
+        this.best20 = echarts.init(this.$refs.best20),
+        this.worst20 = echarts.init(this.$refs.worst20);
 		let today = new Date();
 		let optionObj = {
 			colorList : ['#4cc74c', '#FFBB17', '#ffbc66', '#ff7a7a', '#d21e1e', '#783535'],
@@ -109,8 +111,8 @@ export default {
                 }
             }]
         });
-    	this.$watch('jsonData', function (newVal, oldVal) {
-    		if(newVal != oldVal){
+    	// this.$watch('jsonData', function (newVal, oldVal) {
+    		// if(newVal != oldVal){
     			this.jsonData.forEach((val, key) => {
 		            if(key < 20){
 		                this.bestX.push(val.city);
@@ -142,8 +144,8 @@ export default {
 		                data: this.worstY
 		            }]
 		        });	    
-    		}
-		});
+    		// }
+		// });
     },
     activated() {
 		// console.log(3);
@@ -155,7 +157,9 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-#best20, #worst20{
-	margin: 0 auto;
+.bar{
+    div{
+        margin: 0 auto;
+    }
 }
 </style>

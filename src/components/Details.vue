@@ -10,13 +10,14 @@
         		<th>空气质量指数(AQI)</th>
         		<th>等级</th>
         	</tr>
-        	<tr v-for="(val, idx) in jsonData" :id="val.city">
+        	<tr v-for="(val, idx) in jsonData" :id="val.city" @mouseenter="details_showPic($event, val.situ)" @mouseleave="details_showPic($event)">
         		<td>{{idx + 1}}</td>
         		<td>{{val.city}}</td>
         		<td :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">{{val.num}}</td>
         		<td :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">{{val.situ}}</td>
         	</tr>
         </table>
+        <img src="static/img/a.jpg" :style="{top: y, left: x, filter: filter}" v-show="showPic" alt="">
     </div>
 </template>
 <script>
@@ -28,6 +29,12 @@ import { mapActions } from 'vuex'
 export default {
     data() {
         return {
+        	timeout: null,
+        	showPic: false,
+	        x: '0px',
+	        y: '0px',
+	        opacity: 100,
+	        blur: 0
         }
     },
     computed: {
@@ -36,7 +43,11 @@ export default {
     		jsonData: state => state.details.jsonData,
     		lastSearchArea: state => state.details.lastSearchArea,
     		abledToSearch: state => state.details.abledToSearch,
+    		
     	}),
+    	filter: function() {
+    		return 'opacity(' + this.opacity + ') blur(' + this.blur + 'px)' 
+    	},
     	searchArea: {
     		get () {
 		      	return this.$store.state.details.searchArea
@@ -47,18 +58,53 @@ export default {
     	}
     },
     methods: {
-    	...mapMutations(['toggleLoading']),
+    	...mapMutations(['global_toggleLoading']),
     	...mapActions(['details_search']),
+    	details_showPic(e, val) {
+            clearTimeout(this.timeout);
+            // console.log(e)
+            if(e.type.toLowerCase() == 'mouseleave'){
+            	this.showPic = false;
+            	return;
+            }
+            this.timeout = setTimeout(function(){
+            	switch(val){
+            		case '优':
+            			this.opacity = 100;
+            			this.blur = 0;
+            			break;
+            		case '良':
+            			this.opacity = 95;
+            			this.blur = 0;
+            			break;
+        			case '轻度污染':
+            			this.opacity = 90;
+            			this.blur = 1;
+            			break;
+        			case '中度污染':
+            			this.opacity = 80;
+            			this.blur = 2;
+            			break;	
+        			case '重度污染':
+            			this.opacity = 70;
+            			this.blur = 2;
+            			break;
+            	}
+                this.x = e.x - e.offsetX + e.target.clientWidth + 'px';
+                this.y = e.y - e.offsetY + 'px';
+                this.showPic = true;
+            }.bind(this), 150)
+        }
     },
     mounted() {
-        this.toggleLoading();
+        this.global_toggleLoading();
     },
     activated() {
     },
     deactivated() {
     },
     beforeRouteLeave (to, from, next) {
-        this.toggleLoading();
+        this.global_toggleLoading();
         next();
         // 在渲染该组件的对应路由被 confirm 前调用
         // 不！能！获取组件实例 `this`
@@ -147,6 +193,10 @@ export default {
 		tr:hover{
 			background-color: #D3FFDF;
 		}
+	}
+	img{
+    	width: 200px;
+    	position: fixed;
 	}
 	
 </style>

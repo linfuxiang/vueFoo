@@ -4,11 +4,11 @@
         <!-- <top :jsonData="jsonData" keep-alive v-if="showWhichComponent == 1"></top> -->
         <!-- <geo :jsonData="jsonData" keep-alive v-if="showWhichComponent == 2"></geo> -->
         <!-- <transition name="fade"> -->
-            <keep-alive>
+            <!-- <keep-alive> -->
                 <!-- <transition name="fade" mode="out-in"> -->
-                <component :is="showWhichComponent"></component>
+                <component class="charts_com" :is="showWhichComponent"></component>
                 <!-- </transition> -->
-            </keep-alive>
+            <!-- </keep-alive> -->
         <!-- </transition> -->
         
         <button @click="charts_change">切换图表&gt;</button>
@@ -42,7 +42,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['toggleLoading', 'charts_change']),
+        ...mapMutations(['global_toggleLoading', 'charts_change']),
         ...mapActions(['charts_getData']),
     },
     mounted() {
@@ -53,7 +53,7 @@ export default {
     deactivated() {
     },
     beforeRouteLeave (to, from, next) {
-        this.toggleLoading();
+        this.global_toggleLoading();
         next();
         // 在渲染该组件的对应路由被 confirm 前调用
         // 不！能！获取组件实例 `this`
@@ -78,5 +78,8 @@ button {
     font-size: 20px;
     outline: none;
     cursor: pointer;
+}
+.charts_com{
+    margin: 0 auto;
 }
 </style>
