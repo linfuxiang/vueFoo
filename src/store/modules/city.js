@@ -15,23 +15,19 @@ export default {
         city_toggleselectCity(state) {
             state.hasSelectedCity = !state.hasSelectedCity;
         },
-        city_togglecityModal(state) {
-            state.showcity = !state.showcity;
-        },
         city_setcityList(state, args) {
         	state.cityList = args.cityList;
         	sessionStorage.cityList = args.cityList;
         },
         city_selectCity(state, args) {
-        	// console.log(args);
         	state.city = args.target.innerText;
         	state.hasSelectedCity = !state.hasSelectedCity;
+        	localStorage.city = state.city;
         }
     },
     actions: {
         city_checkInput({ commit, state }) {
         	// sessionStorage.removeItem('cityList')
-        	commit('city_togglecityModal');
         	if(sessionStorage.cityList){
         		return ;
         	}
