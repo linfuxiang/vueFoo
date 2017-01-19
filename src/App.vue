@@ -1,4 +1,5 @@
 <template>
+    <!-- <div id="app" v-if="!isMobile"> -->
     <div id="app" v-if="!isMobile">
         <navi></navi>
         <!-- <keep-alive> -->
@@ -8,7 +9,9 @@
         <user></user>
         <loading v-show="isShowLoading"></loading>
     </div>
-    <div id="app" v-else>{{isMobile ? '请用电脑浏览器打开' : ''}}</div>
+    <div id="app" v-else>
+        <router-view></router-view>
+    </div>
 </template>
 <script>
 import navi from './components/Navi'
@@ -36,7 +39,7 @@ export default {
         loading
     },
     methods: {
-        ...mapMutations(['global_setMobile', 'global_toggleLoading'])
+        ...mapMutations(['global_setMobile'])
     },
     mounted() {
         // 没做移动端适配前，判断是否手机浏览器
@@ -46,6 +49,7 @@ export default {
             isMobile = isAndroid || isIos;
         this.global_setMobile(isMobile);
         if(isMobile){
+            this.$router.push('charts')
             return false;
         }
     }

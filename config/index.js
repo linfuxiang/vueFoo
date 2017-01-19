@@ -26,12 +26,12 @@ module.exports = {
         //     target: 'https://www.superlfx.cn:10011/'
         // },
         // '/signup': {
-        //     target: 'https://www.superlfx.cn:10000',
-        //     changeOrigin: true,
+            // target: 'https://www.superlfx.cn',
+            // changeOrigin: true,
         // },
         // '/signin': {
-        //     target: 'https://www.superlfx.cn:10000',
-        //     changeOrigin: true,
+            // target: 'https://www.superlfx.cn',
+            // changeOrigin: true,
         // },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

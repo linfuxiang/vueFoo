@@ -26,31 +26,33 @@ export default {
     },
     actions: {
         details_search({ commit, state }) {
-            let searchArea = state.searchArea.trim();
+            let searchArea = state.searchArea.trim().replace(/[市|县]/, function(){return '';});
             if (state.lastSearchArea === searchArea || state.abledToSearch === false) {
                 return false;
             }
-            commit('global_toggleLoading');
+            commit('global_showLoading');
             commit('details_toggleSearch');
             // let today = new Date();
             // let collectionName = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + ':00';
-            let collectionName = 'latest';
-            Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
-                params: {
+            let collectionName = 'latest2';
+            // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
+            Vue.http.post(GLOBAL_PATH.JSONP_URI + 'getData', {
+                // params: {
                     'reqCollection': collectionName,
                     'reqArea': searchArea
-                }
+                // }
             }).then((res) => {
-                commit('global_toggleLoading');
+                var data = res.data;
+                commit('global_hideLoading');
                 commit({
                     type: 'details_successSearch',
-                    jsonData: res.data.data,
+                    jsonData: data.data,
                     lastSearchArea: searchArea
                 })
                 commit('details_toggleSearch');
             }, (err) => {
                 commit('details_toggleSearch');
-                commit('global_toggleLoading');
+                commit('global_hideLoading');
                 console.log(err);
             });
         }

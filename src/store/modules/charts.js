@@ -12,13 +12,13 @@ export default {
     },
     mutations: {
         charts_initComponent(state) {
-            state.showWhichComponent = 'top';
+            state.showWhichComponent = 'geo';
         },
     	charts_change(state) {
-            if(state.showWhichComponent == 'top'){
+            if(state.showWhichComponent == 'bar'){
                 state.showWhichComponent = 'geo';
             } else {
-                state.showWhichComponent = 'top';
+                state.showWhichComponent = 'bar';
             }
         },
         charts_changeData(state, args) {
@@ -28,25 +28,28 @@ export default {
     actions: {
     	charts_getData({commit, state}) {
             if(state.jsonData.length > 0){
-                commit('global_toggleLoading');
+                commit('global_hideLoading');
                 commit('charts_initComponent');
                 return ;
             }
-			Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
-			    params: {
-			        'reqCollection': 'latest',
+            // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
+			Vue.http.post(GLOBAL_PATH.JSONP_URI + 'getData', {
+			    // params: {
+			        'reqCollection': 'latest2',
 			        'reqArea': ''
-			    }
+			    // }
 			}).then((res) => {
+                let data = res.data;
+                // let data = JSON.parse(res.data);
 			    commit({
 			    	type: 'charts_changeData',
-			    	data: res.data.data
+			    	data: data.data
 			    });
-			    commit('global_toggleLoading');
+			    commit('global_hideLoading');
                 commit('charts_initComponent');
 			}, (err) => {
 			    console.log(err);
-			    commit('global_toggleLoading');
+			    commit('global_hideLoading');
 			});
     	}    	
     }

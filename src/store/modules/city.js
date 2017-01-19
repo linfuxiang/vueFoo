@@ -31,17 +31,16 @@ export default {
         	if(sessionStorage.cityList){
         		return ;
         	}
-            commit('global_toggleLoading');
+            commit('global_showLoading');
             Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getAllCity').then((res) => {
-            	console.log(res.data)
             	commit({
             		type: 'city_setcityList',
             		cityList: res.data
             	})
-                commit('global_toggleLoading');
+                commit('global_hideLoading');
             }, (err) => {
                 // console.log(err);
-                commit('global_toggleLoading');
+                commit('global_hideLoading');
             });
         }
     }

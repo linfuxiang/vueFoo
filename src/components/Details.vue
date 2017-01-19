@@ -6,15 +6,31 @@
         <table cellspacing="0">
         	<tr>
         		<th>排序</th>
-        		<th>城市</th>
-        		<th>空气质量指数(AQI)</th>
-        		<th>等级</th>
+        		<th style="width: 100px;">城市</th>
+        		<th>AQI</th>
+                <th>等级</th>
+                <th>首要污染物</th>
+                <th>PM 2.5</th>
+                <th>PM 10</th>
+                <th>CO</th>
+                <th>NO2</th>
+                <th>O3</th>
+                <th>O3_8h</th>
+        		<th>SO2</th>
         	</tr>
-        	<tr v-for="(val, idx) in jsonData" :id="val.city" @mouseenter="details_showPic($event, val.situ)" @mouseleave="details_showPic($event)">
+        	<tr v-for="(val, idx) in jsonData" :id="val.city" @mouseenter="details_showPic($event, val.situ)" @mouseleave="details_showPic($event)" :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">
         		<td>{{idx + 1}}</td>
         		<td>{{val.city}}</td>
-        		<td :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">{{val.num}}</td>
-        		<td :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">{{val.situ}}</td>
+        		<td class="color">{{val.aqi != -1 ? val.aqi : '无数据'}}</td>
+        		<td class="color">{{val.situ}}</td>
+                <td>{{val.pri != -1 ? val.pri : '无数据'}}</td>
+                <td>{{val.pm25 != -1 ? val.pm25 : '无数据'}}</td>
+                <td>{{val.pm10 != -1 ? val.pm10 : '无数据'}}</td>
+                <td>{{val.co != -1 ? val.co : '无数据'}}</td>
+                <td>{{val.no2 != -1 ? val.no2 : '无数据'}}</td>
+                <td>{{val.o3 != -1 ? val.o3 : '无数据'}}</td>
+                <td>{{val.o3_8h != -1 ? val.o3_8h : '无数据'}}</td>
+                <td>{{val.so2 != -1 ? val.so2 : '无数据'}}</td>
         	</tr>
         </table>
         <img src="static/img/a.jpg" :style="{top: y, left: x, filter: filter}" v-show="showPic" alt="">
@@ -97,19 +113,13 @@ export default {
         }
     },
     mounted() {
-        this.global_toggleLoading();
+        // this.global_toggleLoading();
     },
     activated() {
     },
     deactivated() {
     },
-    beforeRouteLeave (to, from, next) {
-        this.global_toggleLoading();
-        next();
-        // 在渲染该组件的对应路由被 confirm 前调用
-        // 不！能！获取组件实例 `this`
-        // 因为当钩子执行前，组件实例还没被创建
-    }
+    
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -159,30 +169,42 @@ export default {
 	}
 	table{
 		@include blockCenter;
-		width: 600px;
+		width: 800px;
 		th{
 			background-color: $thBgColor;
 			color: $thFontColor;
 			padding: 2px 0;
-			width: 150px;
+			width: 63px;
 		}
 		.level1{
-			color: $level1BgColor;
+            td.color{
+                color: $level1BgColor;
+            }
 		}
 		.level2{
-			color: $level2BgColor;
+            td.color{
+		        color: $level2BgColor;
+            }
 		}
 		.level3{
-			color: $level3BgColor;
+            td.color{
+			    color: $level3BgColor;
+            }
 		}
 		.level4{
-			color: $level4BgColor;
+            td.color{
+			    color: $level4BgColor;
+            }
 		}
 		.level5{
-			color: $level5BgColor;
+            td.color{
+			    color: $level5BgColor;
+            }
 		}
 		.level6{
-			color: $level6BgColor;
+            td.color{
+    			color: $level6BgColor;
+            }
 		}
 		tr:nth-of-type(odd){
 			// background-color: #D3FFDF;

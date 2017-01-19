@@ -109,19 +109,18 @@ export default {
                 commit('user_showErr');
                 return false;
             }
-            commit('global_toggleLoading');
+            commit('global_showLoading');
             switch (logType) {
                 //登录
                 case 1:
-                    Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signin', {
-                        // this.$http.post('/signin', {
-                        params: {
+                    // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signin', {
+                    Vue.http.post(GLOBAL_PATH.JSONP_URI + 'signin', {
+                        // params: {
                             un: state.un,
                             pw: state.pw1
-                        }
+                        // }
                     }).then((res) => {
                         let data = res.data;
-                        // console.log(data.un)
                         // let data = JSON.parse(res.data);
                         if (data.status == 200) {
                             commit({
@@ -135,10 +134,10 @@ export default {
                         } else {
                         	commit('user_showErr');
                         }
-                        commit('global_toggleLoading');
+                        commit('global_hideLoading');
                     }, (err) => {
                         console.log(err);
-                        commit('global_toggleLoading');
+                        commit('global_hideLoading');
                     });
                     break;
                     //注册
@@ -148,15 +147,15 @@ export default {
                         	type: 'user_showErr',
                         	text: '用户名已存在或密码不相同'
                         });
-                        commit('global_toggleLoading');
+                        commit('global_showLoading');
                         return false;
                     }
-                    Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signup', {
-                        // this.$http.post('/signup', {
-                        params: {
+                    // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signup', {
+                    Vue.http.post(GLOBAL_PATH.JSONP_URI + 'signup', {
+                        // params: {
                             un: state.un,
                             pw: state.pw1
-                        }
+                        // }
                     }).then((res) => {
                         let data = res.data;
                         // let data = JSON.parse(res.data);
@@ -175,10 +174,10 @@ export default {
 	                        	text: '用户名已存在或密码不相同'
 	                        });                        
                         }
-                        commit('global_toggleLoading');
+                        commit('global_hideLoading');
                     }, (err) => {
                         console.log(err);
-                        commit('global_toggleLoading');
+                        commit('global_hideLoading');
                     });
                     break;
             }

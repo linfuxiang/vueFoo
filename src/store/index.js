@@ -20,9 +20,12 @@ export default new Vuex.Store({
         global_setMobile(state, bool) {
         	state.isMobile = bool;
         },
-        global_toggleLoading(state) {
-        	state.isShowLoading = !state.isShowLoading;
-        }
+        global_showLoading(state) {
+        	state.isShowLoading = true;
+        },
+        global_hideLoading(state) {
+            state.isShowLoading = false;
+        },
     },
     modules: {
         hello,

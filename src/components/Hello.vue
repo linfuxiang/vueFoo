@@ -5,7 +5,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { mapMutations } from 'vuex'
+// import { mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -17,23 +17,24 @@ export default {
             title: state => state.hello.title,
         })
     },
-    methods: {
-        ...mapMutations(['global_toggleLoading']),
-    },
-    mounted() {
-        this.global_toggleLoading();
-    },
+    // methods: {
+    //     ...mapMutations(['global_showLoading', 'global_hideLoading']),
+    // },
+    // mounted() {
+    //     this.global_hideLoading();
+    //     // this.aaa();
+    // },
     activated() {
     },
     deactivated() {
     },
-    beforeRouteLeave (to, from, next) {
-        this.global_toggleLoading();
-        next();
-        // 在渲染该组件的对应路由被 confirm 前调用
-        // 不！能！获取组件实例 `this`
-        // 因为当钩子执行前，组件实例还没被创建
-    }
+    // beforeRouteLeave (to, from, next) {
+    //     this.global_showLoading();
+    //     next();
+    //     // 在渲染该组件的对应路由被 confirm 前调用
+    //     // 不！能！获取组件实例 `this`
+    //     // 因为当钩子执行前，组件实例还没被创建
+    // }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
