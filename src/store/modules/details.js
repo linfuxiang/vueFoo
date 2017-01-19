@@ -25,11 +25,21 @@ export default {
         },
     },
     actions: {
-        details_search({ commit, state }) {
+        details_search({ commit, state, rootState }) {
             let searchArea = state.searchArea.trim().replace(/[市|县]/, function(){return '';});
             if (state.lastSearchArea === searchArea || state.abledToSearch === false) {
                 return false;
             }
+            // console.log(searchArea)
+            if(searchArea == '' && rootState.charts.jsonData.length > 0){
+                commit({
+                    type: 'details_successSearch',
+                    jsonData: rootState.charts.jsonData,
+                    lastSearchArea: searchArea
+                })
+                return ;
+            }
+            console.log(arguments);
             commit('global_showLoading');
             commit('details_toggleSearch');
             // let today = new Date();
@@ -48,7 +58,13 @@ export default {
                     type: 'details_successSearch',
                     jsonData: data.data,
                     lastSearchArea: searchArea
-                })
+                });
+                if(searchArea == ''){
+                    commit({
+                        type: 'charts_changeData',
+                        data: data.data
+                    });
+                }
                 commit('details_toggleSearch');
             }, (err) => {
                 commit('details_toggleSearch');
