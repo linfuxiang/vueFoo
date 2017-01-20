@@ -7,19 +7,19 @@ const routes = [{
     name: 'hello',
     path: '/Hello',
     component: function(resolve) {
-        require(['./components/Hello'], resolve);
+        require(['../components/Hello'], resolve);
     }
 }, {
     name: 'charts',
     path: '/Charts',
     component: function(resolve) {
-        require(['./components/Charts'], resolve);
+        require(['../components/Charts'], resolve);
     }
 }, {
     name: 'details',
     path: '/Details',
     component: function(resolve) {
-        require(['./components/Details'], resolve);
+        require(['../components/Details'], resolve);
     }
 }, {
     path: '*',

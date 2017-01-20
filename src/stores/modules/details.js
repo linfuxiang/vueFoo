@@ -39,7 +39,6 @@ export default {
                 })
                 return ;
             }
-            console.log(arguments);
             commit('global_showLoading');
             commit('details_toggleSearch');
             // let today = new Date();
