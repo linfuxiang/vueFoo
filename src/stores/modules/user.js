@@ -29,6 +29,21 @@ export default {
         user_toSignUp(state) {
             state.isSignUp = true;
         },
+        user_closeSignUp(state) {
+            state.un = '';
+            state.pw1 = '';
+            state.pw2 = '';
+            state.isSignUp = false;
+            state.status = '用户名或密码错误';
+            state.isErr = false;
+        },
+        user_closeSignIn(state) {
+            state.un = '';
+            state.pw1 = '';
+            state.isSignIn = false;
+            state.status = '用户名或密码错误';
+            state.isErr = false;
+        },
         user_cancelSignin(state) {
             state.userName = '';
             state.isSigned = false;
@@ -131,6 +146,7 @@ export default {
                                 userName: data.un,
                                 expire: new Date().getTime() + 259200000
                             });
+                            console.log(111, state.isSigned)
                         } else {
                         	commit('user_showErr');
                         }
@@ -147,7 +163,7 @@ export default {
                         	type: 'user_showErr',
                         	text: '用户名已存在或密码不相同'
                         });
-                        commit('global_showLoading');
+                        commit('global_hideLoading');
                         return false;
                     }
                     // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'signup', {

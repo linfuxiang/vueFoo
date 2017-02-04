@@ -30,7 +30,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.5);
-    z-index: 1999;
+    z-index: 9998;
 }
 
 .spinner {
@@ -43,7 +43,7 @@ export default {
     height: 90px;
     /*position: relative;*/
     text-align: center;
-    z-index: 2000;
+    z-index: 9999;
 
     -webkit-animation: rotate 2.0s infinite linear;
     animation: rotate 2.0s infinite linear;

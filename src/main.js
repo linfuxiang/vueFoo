@@ -8,11 +8,21 @@ import store from './stores/index'
 import mixin from './mixins/mixin'
 import { sync } from 'vuex-router-sync'
 // import VueResource from 'vue-resource'
-// import elementUI from 'element-ui'
-// import 'element-ui/lib/theme-default/index.css'
+import elementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+// import { Button, Input, Select, Menu, MenuItem, Submenu, Table, TableColumn } from 'element-ui'
 
 // Vue.use(VueResource);
-// Vue.use(elementUI);
+Vue.use(elementUI);
+// Vue.use(Button)
+// Vue.use(Input)
+// Vue.use(Select)
+// Vue.use(Menu)
+// Vue.use(MenuItem)
+// Vue.use(Submenu)
+// Vue.use(Table)
+// Vue.use(TableColumn)
+// Loading.service({ fullscreen: true });
 
 // 配置vuex-router-sync
 sync(store, router)

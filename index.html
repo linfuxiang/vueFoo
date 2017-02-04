@@ -18,6 +18,9 @@
 	    // map.centerAndZoom(point, 12);
 
 	    function myFun(result) {
+	    	if(localStorage.city){
+	    		return ;
+	    	}
 	        var cityName = result.name;
 	        // map.setCenter(cityName);
 	        console.log(cityName);

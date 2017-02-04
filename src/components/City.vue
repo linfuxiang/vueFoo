@@ -1,16 +1,22 @@
 <template>
     <div class="city">
         <!-- <div>默认城市：{{ city }}</div> -->
-        <div v-show="hasSelectedCity">默认城市：{{city}}<span @click="city_selectCity">[重选]</span></div>
-        <div v-show="!hasSelectedCity" class="citySelect"@mouseenter="city_checkInput">
-        <!-- @mouseenter="city_checkInput" -->
-        	<div class="cityBtn">[选择城市]</div>
-        	<div class="cityList">
-	    		<ul>
+        <div v-show="hasSelectedCity">默认城市：{{city}}<el-button type="text" @click="city_selectCity">[重选]</el-button></div>
+        <div v-show="!hasSelectedCity" class="citySelect">
+        <!-- @mouseenter="city_checkInput"@click="city_checkInput"  -->
+        	<el-button type="text" @click="city_showDialog">[选择城市]</el-button>
+        	<!-- <div class="cityList"> -->
+	    		<!-- <ul>
 	    			<li v-for="item in cityList" @click="city_selectCity($event)">{{ item }}</li>
-	    		</ul>
+	    		</ul> -->
 	    		<!-- <i @click="city_togglecityModal">×</i> -->
-	    	</div>
+	    		<!-- <el-button type="text" >打开嵌套表单的 Dialog</el-button> -->
+
+	    		<el-dialog title="选择城市" v-model="dialogVisible" @close="city_hideDialog">
+					<el-button v-for="item in cityList" type="text" @click="city_selectCity($event)">{{ item }}</el-button>
+				</el-dialog>
+	    		
+	    	<!-- </div> -->
         </div>
     </div>
 </template>
@@ -31,25 +37,26 @@ export default {
 	        city: state => state.city.city,
 	        showcity: state => state.city.showcity,
 	        cityList: state => state.city.cityList,
+	        dialogVisible: state => state.city.dialogVisible,
     	})
     },
     methods: {
-    	...mapMutations(['city_selectCity', 'city_togglecityModal', 'city_selectCity']),
+    	...mapMutations(['city_toggleselectCity', 'city_selectCity', 'city_initCity', 'city_showDialog', 'city_hideDialog']),
         ...mapActions(['city_checkInput']),
     },
     mounted() {
+    	this.city_initCity();
 	}
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-	$color: lightblue;
 	.city{
 		.citySelect{
 			&:hover{
-				.cityList{
-					display: block;
-				}
+				// .cityList{
+				// 	display: block;
+				// }
 			}
 		}
 		.cityList{
@@ -57,10 +64,11 @@ export default {
 			position: absolute;
 			margin: 0 auto;
 			// width: 50%;
+		    z-index: 999;
 			padding: 20px 0 20px 30px;
 		    right: 0;
     		width: 500px;
-		    background-color: $color;
+		    background-color: lightblue;
 			ul{
 				height: 350px;
 				overflow-y: auto;
@@ -83,25 +91,5 @@ export default {
 			}
 		}
 	}
-	::-webkit-scrollbar  
-	{  
-	    width: 8px;
-	    background-color: $color;  
-	}  
-	  
-	/*定义滚动条轨道 内阴影+圆角*/  
-	::-webkit-scrollbar-track  
-	{  
-	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
-	    border-radius: 10px;  
-	    background-color: #F5F5F5;  
-	}  
-	  
-	/*定义滑块 内阴影+圆角*/  
-	::-webkit-scrollbar-thumb  
-	{  
-	    border-radius: 10px;  
-	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
-	    background-color: #555;  
-	}  
+	
 </style>

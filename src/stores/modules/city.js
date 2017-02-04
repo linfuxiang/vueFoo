@@ -6,12 +6,17 @@ Vue.use(VueResource);
 
 export default {
     state: {
-    	hasSelectedCity: localStorage.city ? true : false,
-        city: localStorage.city || '',
+        dialogVisible: false,
+    	hasSelectedCity: false,
+        city: '',
         showcity: false,
         cityList: sessionStorage.cityList ?  sessionStorage.cityList.split(',') : []
     },
     mutations: {
+        city_initCity(state) {
+            state.hasSelectedCity = localStorage.city ? true : false;
+            state.city = localStorage.city ? localStorage.city : '';
+        },
         city_toggleselectCity(state) {
             state.hasSelectedCity = !state.hasSelectedCity;
         },
@@ -20,10 +25,21 @@ export default {
         	sessionStorage.cityList = args.cityList;
         },
         city_selectCity(state, args) {
+            state.dialogVisible = false;
+            state.hasSelectedCity = !state.hasSelectedCity;
+            if(args.target.innerText == '[重选]'){
+                localStorage.removeItem('city');
+                return;
+            }
         	state.city = args.target.innerText;
-        	state.hasSelectedCity = !state.hasSelectedCity;
         	localStorage.city = state.city;
-        }
+        },
+        city_showDialog(state) {
+            state.dialogVisible = true;
+        },
+        city_hideDialog(state) {
+            state.dialogVisible = false;
+        },
     },
     actions: {
         city_checkInput({ commit, state }) {

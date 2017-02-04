@@ -36,7 +36,7 @@ export default {
         navi,
         tips,
         user,
-        loading
+        loading,
     },
     methods: {
         ...mapMutations(['global_setMobile'])
@@ -62,12 +62,12 @@ export default {
 }
 
 #app {
-    font-family: Helvetica Neue,Helvetica,Arial,PingFang SC,Hiragino Sans GB,WenQuanYi Micro Hei,Microsoft Yahei,sans-serif;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    padding-top: 8px;
+    /*padding-top: 8px;*/
 }
     
 li {
@@ -77,4 +77,26 @@ li {
 a{
     text-decoration: none;
 }
+::-webkit-scrollbar  
+{  
+    width: 10px;
+    background-color: transparent;
+}  
+  
+/*定义滚动条轨道 内阴影+圆角*/  
+::-webkit-scrollbar-track  
+{  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    border-radius: 10px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滑块 内阴影+圆角*/  
+::-webkit-scrollbar-thumb  
+{  
+    border-radius: 10px;  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+    /*background-color: #e0e6ed;*/
+    background-color: #555;
+}  
 </style>

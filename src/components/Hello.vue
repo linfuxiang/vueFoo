@@ -10,6 +10,7 @@ import { mapState } from 'vuex'
 export default {
     data() {
         return {
+            // title: 'a'
         }
     },
     computed: {
@@ -20,10 +21,9 @@ export default {
     // methods: {
     //     ...mapMutations(['global_showLoading', 'global_hideLoading']),
     // },
-    // mounted() {
-    //     this.global_hideLoading();
-    //     // this.aaa();
-    // },
+    mounted() {
+        this.$message('这是一条消息提示');
+    },
     activated() {
     },
     deactivated() {

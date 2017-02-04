@@ -1,19 +1,55 @@
 <template>
     <div class="user">
         <div class="userInfo">
-            <div class="sign" v-if="!isSigned">
-                <a href="" @click.prevent="user_toSignIn">登录</a>
+            <div class="sign" v-show="!isSigned">
+                <!-- <a href="" @click.prevent="user_toSignIn">登录</a> -->
+                <el-button type="text" @click="user_toSignIn">登录</el-button>
                 <span>/</span>
-                <a href="" @click.prevent="user_toSignUp">注册</a>
+                <!-- <a href="" @click.prevent="user_toSignUp">注册</a> -->
+                <el-button type="text" @click="user_toSignUp">注册</el-button>
             </div>
-            <div class="signed" v-else>
+            <div class="signed" v-show="isSigned">
                 <span>用户：{{userName}}</span>
-                <a href="" @click.prevent="user_cancelSignin">登出</a>
+                <el-button type="text" @click="user_cancelSignin">登出</el-button>
             </div>
             <city></city>
         </div>
-
-        <div class="b_signin" v-if="isSignIn">
+        <el-dialog title="登录" v-model="isSignIn" @close="user_closeSignIn">
+            <el-form ref="signIn" label-width="85px" class="demo-ruleForm">
+                <el-form-item label="用户名">
+                    <el-input type="text" v-model.trim="un" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="密码">
+                    <el-input type="password" v-model.trim="pw1" auto-complete="off"></el-input>
+                </el-form-item>
+                <!-- <el-form-item> -->
+                    <div v-show="isErr">{{status}}</div>
+                    <el-button type="primary" @click="user_checkInput(1)">登录</el-button><br>
+                    <el-button type="text" @click="user_toSignUp">没有账号，去注册</el-button>
+                    <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
+                <!-- </el-form-item> -->
+            </el-form>
+        </el-dialog>
+        <el-dialog title="注册" v-model="isSignUp" @close="user_closeSignUp">
+            <el-form ref="signUp" label-width="85px" class="demo-ruleForm">
+                <el-form-item label="用户名">
+                    <el-input type="text" v-model.trim="un" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="密码">
+                    <el-input type="password" v-model.trim="pw1" auto-complete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码">
+                    <el-input type="password" v-model.trim="pw2" auto-complete="off"></el-input>
+                </el-form-item>
+                <!-- <el-form-item> -->
+                    <div v-show="isErr">{{status}}</div>
+                    <el-button type="primary" @click="user_checkInput(2)">注册</el-button><br>
+                    <el-button type="text" @click="user_toSignIn">已有账号，去登录</el-button>
+                    <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
+                <!-- </el-form-item> -->
+            </el-form>
+        </el-dialog>
+        <!-- <div class="b_signin" v-if="isSignIn">
             <i @click="user_closePopup">×</i>
             <h2>登录</h2>
             <label for="un">用户名</label>
@@ -25,8 +61,8 @@
             <div>
                 <a href="" @click.prevent="user_toSignUp">没有账号，去注册</a>
             </div>
-        </div>
-        <div class="b_signup" v-if="isSignUp">
+        </div> -->
+        <!-- <div class="b_signup" v-if="isSignUp">
         	<i @click="user_closePopup">×</i>
         	<h2>注册</h2>
         	<label for="un">用户名</label>
@@ -40,7 +76,7 @@
         	<div>
         		<a href="" @click.prevent="user_toSignIn">已有账号，去登录</a>
         	</div>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -52,6 +88,17 @@ import { mapActions } from 'vuex'
 export default {
     data() {
         return {
+            rules: {
+                un: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                ],
+                pw1: [
+                    { required: true, message: '请输入密码', trigger: 'blur' },
+                ],
+                pw2: [
+                    { required: true, message: '请输入确认密码', trigger: 'blur' },
+                ],
+            }
         }
     },
     components: {
@@ -94,8 +141,21 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['user_cancelSignin', 'user_selectCity']),
+        ...mapMutations(['user_cancelSignin', 'user_selectCity', 'user_closeSignUp', 'user_closeSignIn']),
         ...mapActions(['user_changeStatus', 'user_initStatus', 'user_closePopup', 'user_checkInput', 'user_toSignIn', 'user_toSignUp']),
+        // submitForm(arg, formName) {
+        //     console.log(1)
+        //     this.$refs[formName].validate((valid) => {
+        //         console.log(valid)
+        //         if (valid) {
+        //             // alert('submit!');
+        //             this.user_checkInput(arg);
+        //         } else {
+        //             console.log('error submit!!');
+        //             return false;
+        //         }
+        //     });
+        // }
     },
     mounted() {
         this.user_initStatus();
@@ -108,7 +168,7 @@ export default {
 		position: absolute;
 		top: 0px;
 		right: 0px;
-		background: white;
+		background: transparent;
 	}
 	.b_signin{
 		// width: 250px;
