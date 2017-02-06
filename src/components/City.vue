@@ -4,18 +4,16 @@
         <div v-show="hasSelectedCity">默认城市：{{city}}<el-button type="text" @click="city_selectCity">[重选]</el-button></div>
         <div v-show="!hasSelectedCity" class="citySelect">
         <!-- @mouseenter="city_checkInput"@click="city_checkInput"  -->
-        	<el-button type="text" @click="city_showDialog">[选择城市]</el-button>
+        	<el-button type="text" @click="city_showCity">[选择城市]</el-button>
         	<!-- <div class="cityList"> -->
 	    		<!-- <ul>
 	    			<li v-for="item in cityList" @click="city_selectCity($event)">{{ item }}</li>
 	    		</ul> -->
 	    		<!-- <i @click="city_togglecityModal">×</i> -->
 	    		<!-- <el-button type="text" >打开嵌套表单的 Dialog</el-button> -->
-
-	    		<el-dialog title="选择城市" v-model="dialogVisible" @close="city_hideDialog">
-					<el-button v-for="item in cityList" type="text" @click="city_selectCity($event)">{{ item }}</el-button>
-				</el-dialog>
-	    		
+    		<el-dialog title="选择城市" v-model="dialogVisible" @close="city_hideDialog">
+				<el-button v-for="item in cityList" type="text" @click="city_selectCity($event)">{{ item }}</el-button>
+			</el-dialog>	
 	    	<!-- </div> -->
         </div>
     </div>
@@ -42,7 +40,7 @@ export default {
     },
     methods: {
     	...mapMutations(['city_toggleselectCity', 'city_selectCity', 'city_initCity', 'city_showDialog', 'city_hideDialog']),
-        ...mapActions(['city_checkInput']),
+        ...mapActions(['city_showCity']),
     },
     mounted() {
     	this.city_initCity();

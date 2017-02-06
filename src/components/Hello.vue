@@ -5,7 +5,6 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-// import { mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -18,11 +17,9 @@ export default {
             title: state => state.hello.title,
         })
     },
-    // methods: {
-    //     ...mapMutations(['global_showLoading', 'global_hideLoading']),
-    // },
+    methods: {
+    },
     mounted() {
-        this.$message('这是一条消息提示');
     },
     activated() {
     },

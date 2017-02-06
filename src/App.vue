@@ -7,7 +7,7 @@
         <!-- </keep-alive> -->
         <tips></tips>
         <user></user>
-        <loading v-show="isShowLoading"></loading>
+        <!-- <loading v-show="isShowLoading"></loading> -->
     </div>
     <div id="app" v-else>
         <router-view></router-view>
@@ -52,6 +52,7 @@ export default {
             this.$router.push('charts')
             return false;
         }
+        this.$message('aaa');
     }
 }
 </script>
@@ -79,7 +80,7 @@ a{
 }
 ::-webkit-scrollbar  
 {  
-    width: 10px;
+    width: 5px;
     background-color: transparent;
 }  
   
