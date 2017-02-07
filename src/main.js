@@ -5,7 +5,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './routers/router'
 import store from './stores/index'
-import mixin from './mixins/mixin'
+// import mixin from './mixins/mixin'
 import { sync } from 'vuex-router-sync'
 // import VueResource from 'vue-resource'
 import elementUI from 'element-ui'
@@ -27,7 +27,7 @@ Vue.use(elementUI);
 // 配置vuex-router-sync
 sync(store, router)
 
-Vue.mixin(mixin)
+// Vue.mixin(mixin)
 
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({

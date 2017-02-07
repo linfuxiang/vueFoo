@@ -42,9 +42,10 @@ export default {
         },
     },
     actions: {
-        city_checkInput({ commit, state }) {
+        city_showCity({ commit, state }) {
         	// sessionStorage.removeItem('cityList')
         	if(sessionStorage.cityList){
+                commit('city_showDialog');
         		return ;
         	}
             commit('global_showLoading');
@@ -53,6 +54,7 @@ export default {
             		type: 'city_setcityList',
             		cityList: res.data
             	})
+                commit('city_showDialog');
                 commit('global_hideLoading');
             }, (err) => {
                 // console.log(err);
