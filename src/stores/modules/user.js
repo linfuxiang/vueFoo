@@ -146,7 +146,6 @@ export default {
                                 userName: data.un,
                                 expire: new Date().getTime() + 259200000
                             });
-                            console.log(111, state.isSigned)
                         } else {
                         	commit('user_showErr');
                         }

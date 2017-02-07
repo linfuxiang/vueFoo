@@ -23,7 +23,7 @@
                     <el-input type="password" v-model.trim="pw1" auto-complete="off"></el-input>
                 </el-form-item>
                 <!-- <el-form-item> -->
-                    <div v-show="isErr">{{status}}</div>
+                    <div class="error" v-show="isErr">{{status}}</div>
                     <el-button type="primary" @click="user_checkInput(1)">登录</el-button><br>
                     <el-button type="text" @click="user_toSignUp">没有账号，去注册</el-button>
                     <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
@@ -42,7 +42,7 @@
                     <el-input type="password" v-model.trim="pw2" auto-complete="off"></el-input>
                 </el-form-item>
                 <!-- <el-form-item> -->
-                    <div v-show="isErr">{{status}}</div>
+                    <div class="error" v-show="isErr">{{status}}</div>
                     <el-button type="primary" @click="user_checkInput(2)">注册</el-button><br>
                     <el-button type="text" @click="user_toSignIn">已有账号，去登录</el-button>
                     <!-- <el-button @click="resetForm('ruleForm2')">重置</el-button> -->
@@ -170,6 +170,9 @@ export default {
 		right: 0px;
 		background: transparent;
 	}
+    .error{
+        color: #FF4949;
+    }
 	.b_signin{
 		// width: 250px;
 		// height: 400px;

@@ -22,7 +22,7 @@ export default {
     //     ...mapMutations(['global_showLoading', 'global_hideLoading']),
     // },
     mounted() {
-        this.$message('这是一条消息提示');
+        // this.$message('这是一条消息提示');
     },
     activated() {
     },
