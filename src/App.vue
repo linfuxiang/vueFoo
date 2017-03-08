@@ -52,6 +52,7 @@ export default {
             this.$router.push('charts')
             return false;
         }
+        
     }
 }
 </script>
