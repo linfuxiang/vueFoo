@@ -43,13 +43,14 @@ export default {
             commit('details_toggleSearch');
             // let today = new Date();
             // let collectionName = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + ':00';
-            let collectionName = 'latest2';
+            let collectionName = 'latest';
             // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
-            Vue.http.post(GLOBAL_PATH.JSONP_URI + 'getData', {
-                // params: {
+            // Vue.http.post(GLOBAL_PATH.JSONP_URI + 'getData', {
+            Vue.http.get(GLOBAL_PATH.JSONP_URI + 'getData', {
+                params: {
                     'reqCollection': collectionName,
                     'reqArea': searchArea
-                // }
+                }
             }).then((res) => {
                 var data = res.data;
                 commit('global_hideLoading');

@@ -94,7 +94,7 @@ export default {
     },
     methods: {
         aaa(row, col) {
-            return row[col.property] == -1 ? '无数据' : row[col.property]
+            return row[col.property] == -1 ? '_' : row[col.property]
         },
         bbb(row, col) {
             return ('level' + ((row.situ == '优') ? 1 : (row.situ == '良') ? 2 : (row.situ == '轻度污染') ? 3 : (row.situ == '中度污染') ? 4 : (row.situ == '重度污染') ? 5 : 6))

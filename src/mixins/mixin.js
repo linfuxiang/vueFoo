@@ -1,4 +1,4 @@
-// import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 // import { Loading } from 'element-ui'
 export default {
 	data() {
@@ -7,10 +7,10 @@ export default {
 		}
 	},
 	methods: {
-        // ...mapMutations(['global_showLoading', 'global_hideLoading']),
+        ...mapMutations(['global_showLoading', 'global_hideLoading']),
     },
 	mounted() {
-		// this.global_hideLoading();
+		this.global_hideLoading();
 		// this.loading = Loading.service({ fullscreen: true })
 		// console.log(Loading)
 	},
@@ -19,7 +19,7 @@ export default {
 		// this.loading.close();
 	},
 	beforeRouteLeave (to, from, next) {
-        // this.global_showLoading();
+        this.global_showLoading();
         // this.loading.close();
         next();
         // 在渲染该组件的对应路由被 confirm 前调用

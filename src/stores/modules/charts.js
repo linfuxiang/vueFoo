@@ -33,11 +33,11 @@ export default {
                 return ;
             }
             // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
-			Vue.http.post(GLOBAL_PATH.JSONP_URI + 'getData', {
-			    // params: {
-			        'reqCollection': 'latest2',
+			Vue.http.get(GLOBAL_PATH.JSONP_URI + 'getData', {
+			    params: {
+			        'reqCollection': 'latest',
 			        'reqArea': ''
-			    // }
+			    }
 			}).then((res) => {
                 let data = res.data;
                 // let data = JSON.parse(res.data);

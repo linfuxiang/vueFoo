@@ -49,7 +49,7 @@ export default {
         		return ;
         	}
             commit('global_showLoading');
-            Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getAllCity').then((res) => {
+            Vue.http.get(GLOBAL_PATH.JSONP_URI + 'getAllCity').then((res) => {
             	commit({
             		type: 'city_setcityList',
             		cityList: res.data
