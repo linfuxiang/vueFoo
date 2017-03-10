@@ -8,8 +8,11 @@ export default {
     state: {
         msg: '详细数据报表',
         jsonData: [],
-        searchArea: localStorage.city ? localStorage.city : '',
-        lastSearchArea: null,
+        searchVal: localStorage.city ? localStorage.city : '',
+        dateVal: Date(),
+        hourVal: '6:00',
+        lastsearchVal: null,
+        lasttimeVal: null,
         abledToSearch: true,
     },
     mutations: {
@@ -18,53 +21,62 @@ export default {
         },
         details_successSearch(state, args) {
             state.jsonData = args.jsonData;
-            state.lastSearchArea = args.lastSearchArea;
+            state.lastsearchVal = args.lastsearchVal;
         },
-        details_update_searchArea(state, val) {
-            state.searchArea = val
+        details_update_searchVal(state, val) {
+            state.searchVal = val;
+        },
+        details_update_dateVal(state, val) {
+            state.dateVal = val;
+        },
+        details_update_hourVal(state, val) {
+            state.hourVal = val;
         },
     },
     actions: {
         details_search({ commit, state, rootState }) {
-            let searchArea = state.searchArea.trim().replace(/[市|县]/, function(){return '';});
-            if (state.lastSearchArea === searchArea || state.abledToSearch === false) {
+            let dateStr = new Date(state.dateVal);
+            dateStr = `${dateStr.getFullYear()}-${dateStr.getMonth()+1}-${dateStr.getDate()}_${state.hourVal}`
+            // console.log(dateStr);
+            let searchVal = state.searchVal.trim().replace(/[市|县]/, function(){return '';});
+            if (state.lasttimeVal === dateStr && state.lasttimeVal === lastsearchVal || state.abledToSearch === false) {
                 return false;
             }
-            // console.log(searchArea)
-            if(searchArea == '' && rootState.charts.jsonData.length > 0){
-                commit({
-                    type: 'details_successSearch',
-                    jsonData: rootState.charts.jsonData,
-                    lastSearchArea: searchArea
-                })
-                return ;
+            /* 如果查找全部且存在数据,不进行请求,直接读localStorage */
+            if(localStorage[dateStr]){
+                // console.log(JSON.parse(localStorage[dateStr]))
+                let data = JSON.parse(localStorage[dateStr]);
+                if(data.length !== 0) {
+                    commit({
+                        type: 'details_successSearch',
+                        jsonData: JSON.parse(localStorage[dateStr]),
+                        lastsearchVal: searchVal,
+                        lasttimeVal: dateStr
+                    })
+                    return ;
+                }
             }
             commit('global_showLoading');
             commit('details_toggleSearch');
-            // let today = new Date();
-            // let collectionName = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '_' + today.getHours() + ':00';
-            let collectionName = 'latest';
             // Vue.http.jsonp(GLOBAL_PATH.JSONP_URI + 'getData', {
             // Vue.http.post(GLOBAL_PATH.JSONP_URI + 'getData', {
             Vue.http.get(GLOBAL_PATH.JSONP_URI + 'getData', {
                 params: {
-                    'reqCollection': collectionName,
-                    'reqArea': searchArea
+                    'reqCollection': dateStr,
+                    'reqArea': searchVal
                 }
             }).then((res) => {
                 var data = res.data;
-                commit('global_hideLoading');
                 commit({
                     type: 'details_successSearch',
                     jsonData: data.data,
-                    lastSearchArea: searchArea
+                    lastsearchVal: searchVal,
+                    lasttimeVal: dateStr
                 });
-                if(searchArea == ''){
-                    commit({
-                        type: 'charts_changeData',
-                        data: data.data
-                    });
+                if(searchVal == ''){
+                    localStorage[dateStr] = JSON.stringify(data.data);
                 }
+                commit('global_hideLoading');
                 commit('details_toggleSearch');
             }, (err) => {
                 commit('details_toggleSearch');

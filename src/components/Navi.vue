@@ -12,7 +12,7 @@
             </template>  
         </el-menu> -->
 
-        <el-menu :default-active="idx" class="el-menu-demo" mode="horizontal" router>
+        <el-menu :default-active="idx" class="container el-menu-demo" mode="horizontal" router>
             <template v-for="item in navLists">
                 <el-menu-item :index="'/' + item.link" >{{item.linkName}}</el-menu-item>
             </template>
@@ -63,6 +63,9 @@ $navPositionTop: -30px;
 
 $transitionTime: all 0.5s;
 
+.nav {
+    background-color: #eef1f6;
+}
 // @mixin setActiveColor{
 // 	background: $activeBgColor;
 // 	color: $activeFontColor;

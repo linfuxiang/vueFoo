@@ -1,26 +1,34 @@
 <template>
     <div class="details">
         <h1>{{ msg }}</h1>
-        <!-- <input v-model="searchArea" @keyup.enter="details_search" placeholder="输入为空则搜索全部数据"> -->
+        <!-- <input v-model="searchVal" @keyup.enter="details_search" placeholder="输入为空则搜索全部数据"> -->
         <!-- <button @click="details_search" :disabled="!abledToSearch" :class="{unabled: !abledToSearch}">搜索</button> -->
-        <el-input placeholder="输入为空则搜索全部数据" v-model="searchArea" @keyup.enter="details_search">
-            <el-button slot="append" icon="search" @click="details_search"></el-button>
-        </el-input>
-        <!-- <el-input placeholder="输入为空则搜索全部数据" v-model="searchArea" @keyup.enter="details_search"></el-input>
-        <el-button type="primary" @click="details_search" :disabled="!abledToSearch" :class="{unabled: !abledToSearch}">主要按钮</el-button> -->
-        <el-table :default-sort = "{prop: 'AQI', order: 'descending'}" :data="jsonData" height="600" border style="width: 100%" :row-class-name="bbb">
+        <div class="input devi">
+            <el-date-picker v-model="dateVal" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>
+        </div>
+        <div class="input">
+            <el-radio-group v-model="hourVal">
+                <el-radio-button label="6:00"></el-radio-button>
+                <el-radio-button label="12:00"></el-radio-button>
+                <el-radio-button label="21:00"></el-radio-button>
+            </el-radio-group>
+        </div>
+        <div @keyup.enter="details_search" class="input devi">
+            <el-input placeholder="输入为空则搜索全部数据" v-model="searchVal" icon="search" :on-icon-click="details_search"></el-input>
+        </div>
+        <el-table :default-sort = "{prop: 'AQI', order: 'descending'}" :data="jsonData" height="600" border style="width: 100%" :row-class-name="setRowClass">
             <el-table-column type="index" label="#" width="80"></el-table-column>
             <el-table-column prop="city" label="城市" width="80"></el-table-column>
             <el-table-column prop="aqi" sortable label="AQI" width="90"></el-table-column>
             <el-table-column prop="situ" label="等级" width="70"></el-table-column>
             <el-table-column prop="pri" label="首要污染物"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="pm25" label="PM 2.5" width="110"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="pm10" label="PM 10" width="110"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="co" label="CO" width="110"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="no2" label="NO2" width="110"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="o3" label="O3" width="110"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="o3_8h" label="O3_8h" width="110"></el-table-column>
-            <el-table-column :formatter="aaa" sortable prop="so2" label="SO2" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="pm25" label="PM 2.5" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="pm10" label="PM 10" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="co" label="CO" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="no2" label="NO2" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="o3" label="O3" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="o3_8h" label="O3_8h" width="110"></el-table-column>
+            <el-table-column :formatter="formatter" sortable prop="so2" label="SO2" width="110"></el-table-column>
         </el-table>
         <!-- <table cellspacing="0">
             <tr>
@@ -69,38 +77,70 @@ export default {
 	        x: '0px',
 	        y: '0px',
 	        opacity: 100,
-	        blur: 0
+	        blur: 0,
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now();
+                },
+                shortcuts: [
+                    {
+                        text: '今天',
+                        onClick(picker) {
+                            picker.$emit('pick', new Date());
+                        }
+                    }, 
+                ]
+            },
         }
     },
     computed: {
     	...mapState({
     		msg: state => state.details.msg,
     		jsonData: state => state.details.jsonData,
-    		lastSearchArea: state => state.details.lastSearchArea,
+    		lastsearchVal: state => state.details.lastsearchVal,
     		abledToSearch: state => state.details.abledToSearch,
     		
     	}),
     	filter: function() {
     		return 'opacity(' + this.opacity + ') blur(' + this.blur + 'px)' 
     	},
-    	searchArea: {
+    	searchVal: {
     		get () {
-		      	return this.$store.state.details.searchArea
+		      	return this.$store.state.details.searchVal
 		    },
 		    set (value) {
-		      	this.$store.commit('details_update_searchArea', value)
+		      	this.$store.commit('details_update_searchVal', value)
 		    }
-    	}
+    	},
+        dateVal: {
+            get () {
+                return this.$store.state.details.dateVal
+            },
+            set (value) {
+                this.$store.commit('details_update_dateVal', value)
+            }
+        },
+        hourVal: {
+            get () {
+                return this.$store.state.details.hourVal
+            },
+            set (value) {
+                this.$store.commit('details_update_hourVal', value)
+            }
+        }
     },
     methods: {
-        aaa(row, col) {
+        ...mapMutations(['global_toggleLoading']),
+        ...mapActions(['details_search']),
+        aaa() {
+            console.log(1)
+        },
+        formatter(row, col) {
             return row[col.property] == -1 ? '_' : row[col.property]
         },
-        bbb(row, col) {
+        setRowClass(row, col) {
             return ('level' + ((row.situ == '优') ? 1 : (row.situ == '良') ? 2 : (row.situ == '轻度污染') ? 3 : (row.situ == '中度污染') ? 4 : (row.situ == '重度污染') ? 5 : 6))
         },
-    	...mapMutations(['global_toggleLoading']),
-    	...mapActions(['details_search']),
     	details_showPic(e, val) {
             clearTimeout(this.timeout);
             // console.log(e)
@@ -148,6 +188,16 @@ export default {
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+    .input {
+        width: 25%;
+        display: inline-block;
+    }
+    .devi {
+        position: relative;
+        top: -13px;
+    }
+</style>
 <style lang="scss">
 	$buttonColor: #A5DE37;
 
@@ -173,77 +223,38 @@ export default {
 		font-size: 20px;
 	}
 
-	// input{
-	// 	@include inputClass;
-	// 	@include blockCenter;
-	// 	border: 2px solid lightgray;
-	// 	color: gray;
-	// 	width: 400px;
-	// }
-	// button {
-	//     background-color: $buttonColor;
-	//     color: #FFF;
-	//     border: 1px solid $buttonColor;
-	//     cursor: pointer;
-	//     width: 100px;
-	//     @include inputClass;
-	//     @include blockCenter;
-	//     &.unabled{
-	// 		cursor: not-allowed;
-	// 	}
-	// }
-	// table{
-	// 	@include blockCenter;
-	// 	width: 800px;
-	// 	th{
-	// 		background-color: $thBgColor;
-	// 		color: $thFontColor;
-	// 		padding: 2px 0;
-	// 		width: 63px;
-	// 	}
-		.level1{
-            td{
-                color: $level1BgColor;
-            }
-		}
-		.level2{
-            td{
-		        color: $level2BgColor;
-            }
-		}
-		.level3{
-            td{
-			    color: $level3BgColor;
-            }
-		}
-		.level4{
-            td{
-			    color: $level4BgColor;
-            }
-		}
-		.level5{
-            td{
-			    color: $level5BgColor;
-            }
-		}
-		.level6{
-            td{
-    			color: $level6BgColor;
-            }
-		}
-		// tr:nth-of-type(odd){
-			// background-color: #D3FFDF;
-		// }
-		// tr:nth-of-type(even){
-			// background-color: #FFE9C4;
-		// }
-		// tr:hover{
-		// 	background-color: #D3FFDF;
-		// }
-	// }
+	.level1{
+        td{
+            color: $level1BgColor;
+        }
+	}
+	.level2{
+        td{
+	        color: $level2BgColor;
+        }
+	}
+	.level3{
+        td{
+		    color: $level3BgColor;
+        }
+	}
+	.level4{
+        td{
+		    color: $level4BgColor;
+        }
+	}
+	.level5{
+        td{
+		    color: $level5BgColor;
+        }
+	}
+	.level6{
+        td{
+			color: $level6BgColor;
+        }
+	}
 	img{
     	width: 200px;
     	position: fixed;
 	}
-	
 </style>
