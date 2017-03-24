@@ -6,8 +6,6 @@
             <router-view class="container"></router-view>
         <!-- </keep-alive> -->
         <tips></tips>
-        <user></user>
-        <advice></advice>
         <!-- <loading v-show="isShowLoading"></loading> -->
     </div>
     <div id="app" v-else>
@@ -17,9 +15,7 @@
 <script>
 import navi from './components/Navi'
 import tips from './components/Tips'
-import user from './components/User'
 import loading from './components/Loading'
-import advice from './components/Advice'
 import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 
@@ -37,9 +33,7 @@ export default {
     components: {
         navi,
         tips,
-        user,
         loading,
-        advice,
     },
     methods: {
         ...mapMutations(['global_setMobile'])
@@ -100,5 +94,6 @@ a{
 .container {
     width: 960px!important;
     margin: 0 auto!important;
+    position: relative;
 }
 </style>

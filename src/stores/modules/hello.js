@@ -1,5 +1,10 @@
 export default {
-	state: {
-		title: 'Welcome to Air Quality Monitoring Platform'
-	}	
+    state: {
+        title: 'Welcome to Air Quality Monitoring Platform'
+    },
+    mutations: {
+
+    },
+    actions: {
+    }
 }

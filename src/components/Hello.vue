@@ -1,10 +1,13 @@
 <template>
     <div class="hello">
         <h1>{{ title }}</h1>
+        <advice></advice>
     </div>
 </template>
 <script>
 import { mapState } from 'vuex'
+// import { mapActions } from 'vuex'
+import advice from './Advice'
 
 export default {
     data() {
@@ -17,10 +20,13 @@ export default {
             title: state => state.hello.title,
         })
     },
+    components: {       
+        advice,
+    },
     methods: {
+        // ...mapActions(['hello_getData']),
     },
     mounted() {
-        // this.$message('这是一条消息提示');
     },
     activated() {
     },

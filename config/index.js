@@ -22,8 +22,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        // '/': {
-        //     target: 'https://www.superlfx.cn:10011/'
+        // '/v3/weather/now.json': {
+        //     target: 'https://api.thinkpage.cn',
+        //     changeOrigin: true
         // },
         // '/signup': {
             // target: 'https://www.superlfx.cn',
