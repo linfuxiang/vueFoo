@@ -1,8 +1,36 @@
 <template>
-    <div class="advice">
-        <div class="title">
-            今日天气
+    <div class="advice bad" v-if="canShow" :class="{good:now.code==0||now.code==2||now.code==38}">
+        <div class="now">
+            <div class="title">
+                {{ location.name }}
+                <span class="title-time">{{ time | timeFormatter }}</span>
+            </div>
+            <div class="details">
+                <div class="details-temp">{{ now.temperature }}</div>
+                <div class="details-default">°C</div>
+                <div class="details-default">{{ now.text }}<br><img :src="`static/img/icons/${now.code}.png`"></div>
+                <div class="details-default">空气{{ now.situ }}<br>{{ now.aqi }}</div>
+            </div>
+            <div class="brief">
+                <div class="">洗车指数<br>{{ suggestion.car_washing.brief }}</div>
+                <div class="">穿衣指数<br>{{ suggestion.dressing.brief }}</div>
+                <div class="">感冒指数<br>{{ suggestion.flu.brief }}</div>
+            </div>
+            <div class="brief">
+                <div class="">运动指数<br>{{ suggestion.sport.brief }}</div>
+                <div class="">旅游指数<br>{{ suggestion.travel.brief }}</div>
+                <div class="">紫外线强度<br>{{ suggestion.uv.brief }}</div>
+            </div>
         </div>
+        <div class="daily">
+            <div class="daily-details" v-for="item in daily">
+                <div>{{ item.date | MDformatter }}</div>
+                <div>{{ item.low }}°C / {{ item.high }}°C</div>
+                <div>{{ item.text_day }} / {{ item.text_night }}</div>
+                <div>{{ item.wind_direction }}风{{ item.wind_scale }}级</div>
+            </div>
+        </div>
+      
     </div>
 </template>
 <script>
@@ -13,11 +41,17 @@ import { mapActions } from 'vuex'
 export default {
     data() {
         return {
+            isDay: false,
+            time: new Date(),
         }
     },
     computed: {
         ...mapState({
-            data: state => state.advice.data,
+            canShow: state => state.advice.canShow,
+            now: state => state.advice.now,
+            daily: state => state.advice.daily,
+            location: state => state.advice.location,
+            suggestion: state => state.advice.suggestion,
         }),
     },
     methods: {
@@ -25,11 +59,14 @@ export default {
         ...mapActions(['advice_getData']),
     },
     mounted() {
-        this.global_setDate(new Date())
         this.$notify.info({
           title: '今天',
           message: `今天是${new Date()}`
         });
+        this.advice_getData();
+        setInterval(()=>{
+            this.time = new Date();
+        }, 1000);
     }
 }
 </script>
@@ -37,8 +74,75 @@ export default {
 <style scoped lang="scss">
     .advice {
         float: right;
-        width: 200px;
-        height: 300px;
-        background-color: blue;
+        width: 300px;
+        color: white;
+        font-weight: lighter;
+        text-align: left;
+        border-radius: 5px;
+        // font-size: 18px;
+        &.bad {
+            background: linear-gradient(#566b6e,#7d939b);
+        }
+        &.good {
+            background: linear-gradient(#2869e9,#79bfff);
+        }
+        .now {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            .title {
+                font-weight: bold;
+                font-size: 18px;
+                .title-time {
+                    font-weight: lighter;
+                    font-size: 14px;
+                    opacity: 0.6;
+                }
+            }
+            .details {
+                div {
+                    display: inline-block;
+                    vertical-align: top;
+                    text-align: center;
+                }
+                img {
+                    width: 30px;
+                }
+                .details-default {
+                    padding-top: 8px;
+                    vertical-align: top;
+                    margin-right: 15px;
+                }
+                .details-temp {
+                    font-size: 50px;
+                }
+            }
+            .brief {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                div {
+                    width: 75px;
+                    display: inline-block;
+                    text-align: center;
+                    font-size: 12px;
+                }
+                
+            }
+        }
+        .daily {
+            display: flex;
+            padding: 8px 0px;
+            .daily-details {
+                font-size: 14px;
+                flex: 1;
+                text-align: center;
+                box-sizing: border-box;
+                padding: 0 3px;
+                border-right: 1px solid rgba(255, 255, 255, 0.5);
+                &:last-of-type {
+                    border: none;
+                }
+            }
+        }
     }
 </style>

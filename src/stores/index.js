@@ -7,6 +7,7 @@ import navi from './modules/navi'
 import user from './modules/user'
 import city from './modules/city'
 import details from './modules/details'
+import advice from './modules/advice'
 
 Vue.use(Vuex)
 
@@ -36,7 +37,8 @@ export default new Vuex.Store({
     	navi,
         user,
         city,
-        details
+        details,
+        advice,
     }
 
 })

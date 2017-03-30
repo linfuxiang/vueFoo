@@ -9,6 +9,24 @@ export default {
 	methods: {
         ...mapMutations(['global_showLoading', 'global_hideLoading']),
     },
+    filters: {
+        timeFormatter(d) {
+            let date;
+            if(typeof date != 'object') {
+                date = new Date(+d);
+            } else {
+                date = d;
+            }
+        	return `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日 ${date.getHours()<10?'0'+date.getHours():date.getHours()}:${date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes()}:${date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds()}`;
+        },
+        MDformatter(date) {
+        	let dateArr = date.split('-');
+        	if(new Date().getDate() == dateArr[2]) {
+        		return '今天';
+        	}
+        	return `${+dateArr[1]}月${+dateArr[2]}日`;
+        }
+    },
 	mounted() {
 		// this.global_hideLoading();
 		// this.loading = Loading.service({ fullscreen: true })

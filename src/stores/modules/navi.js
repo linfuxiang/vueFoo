@@ -1,10 +1,10 @@
 export default {
 	state: {
 		navLists: [{
-            linkName: '欢迎页',
+            linkName: '首页',
             link: 'Hello'
         }, {
-            linkName: '图说AQI',
+            linkName: '图表',
             link: 'Charts'
         }, {
             linkName: '详细数据',
