@@ -1,20 +1,22 @@
 <template>
     <div class="details">
-        <h1>{{ msg }}</h1>
+        <!-- <h1>{{ msg }}</h1> -->
         <!-- <input v-model="searchVal" @keyup.enter="details_search" placeholder="输入为空则搜索全部数据"> -->
         <!-- <button @click="details_search" :disabled="!abledToSearch" :class="{unabled: !abledToSearch}">搜索</button> -->
-        <div class="input devi">
+        <div class="input-group">
+            <div class="input devi">
             <el-date-picker v-model="dateVal" align="right" type="date" placeholder="选择日期" :picker-options="pickerOptions" style="width: 100%;"></el-date-picker>
-        </div>
-        <div class="input">
-            <el-radio-group v-model="hourVal">
-                <el-radio-button label="6:00"></el-radio-button>
-                <el-radio-button label="12:00"></el-radio-button>
-                <el-radio-button label="21:00"></el-radio-button>
-            </el-radio-group>
-        </div>
-        <div @keyup.enter="details_search" class="input devi">
-            <el-input placeholder="输入为空则搜索全部数据" v-model="searchVal" icon="search" :on-icon-click="details_search"></el-input>
+            </div>
+            <div class="input">
+                <el-radio-group v-model="hourVal">
+                    <el-radio-button label="6:00"></el-radio-button>
+                    <el-radio-button label="12:00"></el-radio-button>
+                    <el-radio-button label="21:00"></el-radio-button>
+                </el-radio-group>
+            </div>
+            <div @keyup.enter="details_search" class="input devi">
+                <el-input placeholder="输入为空则搜索全部数据" v-model="searchVal" icon="search" :on-icon-click="details_search"></el-input>
+            </div>
         </div>
         <el-table :default-sort = "{prop: 'AQI', order: 'descending'}" :data="jsonData" height="600" border style="width: 100%" :row-class-name="setRowClass">
             <el-table-column type="index" label="#" width="80"></el-table-column>
@@ -189,14 +191,23 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-    .input {
-        width: 25%;
-        display: inline-block;
+    .details {
+        margin-top: 10px!important;
+        .input-group {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+            .input {
+                width: 25%;
+                display: inline-block;
+            }
+            .devi {
+                // position: relative;
+                // top: -13px;
+            } 
+        }
     }
-    .devi {
-        position: relative;
-        top: -13px;
-    }
+    
 </style>
 <style lang="scss">
 	$buttonColor: #A5DE37;

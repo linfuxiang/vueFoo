@@ -27,9 +27,8 @@ export default new Vuex.Store({
         global_hideLoading(state) {
             state.isShowLoading = false;
         },
-        global_setDate(state, date) {
-            console.log(date);
-        }
+    },
+    actions: {
     },
     modules: {
         hello,

@@ -15,10 +15,12 @@ export default {
             state.showWhichComponent = 'geo';
         },
     	charts_change(state) {
-            if(state.showWhichComponent == 'bar'){
-                state.showWhichComponent = 'geo';
-            } else {
+            if(state.showWhichComponent == 'geo'){
                 state.showWhichComponent = 'bar';
+            } else if(state.showWhichComponent == 'bar'){
+                state.showWhichComponent = 'lines';
+            } else if(state.showWhichComponent == 'lines') {
+                state.showWhichComponent = 'geo';
             }
         },
         charts_changeData(state, args) {

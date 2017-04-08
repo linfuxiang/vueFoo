@@ -1,7 +1,7 @@
 <template>
     <div class="bar">
-        <div ref="best20" style="width: 1100px;height: 400px;"></div>
-        <div ref="worst20" style="width: 1100px;height: 400px;"></div>
+        <div ref="best20" style="width: 960px;height: 400px;"></div>
+        <div ref="worst20" style="width: 960px;height: 400px;"></div>
     </div>
 </template>
 <script>

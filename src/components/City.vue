@@ -1,10 +1,10 @@
 <template>
     <div class="city">
         <!-- <div>默认城市：{{ city }}</div> -->
-        <div v-show="hasSelectedCity">默认城市：{{city}}<el-button type="text" @click="city_selectCity">[重选]</el-button></div>
+        <div v-show="hasSelectedCity">默认地区：{{city}}<el-button type="text" @click="city_selectCity">[重选]</el-button></div>
         <div v-show="!hasSelectedCity" class="citySelect">
         <!-- @mouseenter="city_checkInput"@click="city_checkInput"  -->
-        	<el-button type="text" @click="city_showCity">[选择城市]</el-button>
+        	<el-button type="text" @click="city_showCity">[选择地区]</el-button>
         	<!-- <div class="cityList"> -->
 	    		<!-- <ul>
 	    			<li v-for="item in cityList" @click="city_selectCity($event)">{{ item }}</li>
@@ -39,11 +39,11 @@ export default {
     	})
     },
     methods: {
-    	...mapMutations(['city_toggleselectCity', 'city_selectCity', 'city_initCity', 'city_showDialog', 'city_hideDialog']),
-        ...mapActions(['city_showCity']),
+    	...mapMutations(['city_toggleselectCity', 'city_selectCity', 'city_showDialog', 'city_hideDialog']),
+        ...mapActions(['city_showCity', 'city_initCity']),
     },
     mounted() {
-    	this.city_initCity();
+        this.city_initCity();
 	}
 }
 </script>

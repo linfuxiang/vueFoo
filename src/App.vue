@@ -3,9 +3,8 @@
     <div id="app" v-if="!isMobile">
         <navi></navi>
         <!-- <keep-alive> -->
-            <router-view class="container"></router-view>
+            <router-view class="container pdT"></router-view>
         <!-- </keep-alive> -->
-        <tips></tips>
         <!-- <loading v-show="isShowLoading"></loading> -->
     </div>
     <div id="app" v-else>
@@ -14,10 +13,10 @@
 </template>
 <script>
 import navi from './components/Navi'
-import tips from './components/Tips'
 import loading from './components/Loading'
 import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     name: 'app',
@@ -32,11 +31,10 @@ export default {
     ]),
     components: {
         navi,
-        tips,
         loading,
     },
     methods: {
-        ...mapMutations(['global_setMobile'])
+        ...mapMutations(['global_setMobile']),
     },
     mounted() {
         // 没做移动端适配前，判断是否手机浏览器
@@ -96,5 +94,8 @@ a{
     width: 960px!important;
     margin: 0 auto!important;
     position: relative;
+}
+.pdT {
+    padding-top: 60px;
 }
 </style>

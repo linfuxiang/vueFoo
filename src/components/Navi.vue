@@ -1,5 +1,5 @@
 <template>
-    <div class="nav">
+    <div class="nav" :class="{opa: isOpacity}">
         <!-- <ul>
             <li v-for="item in navLists">
                 <router-link active-class="active" :to="{path:'/' + item.link,query:{last: item.link}}">{{item.linkName}}</router-link>
@@ -36,6 +36,7 @@ import user from './User'
 export default {
     data() {
         return {
+            isOpacity: false
         }
     },
     components: {
@@ -50,7 +51,14 @@ export default {
     methods: {
     },
     mounted() {
-        // console.log(this.store)
+        window.onscroll = (e) => {
+            // console.log(e)
+            if(window.scrollY >= 10) {
+                this.isOpacity = true;
+            } else {
+                this.isOpacity = false;
+            }
+        }
     }
 }
 </script>
@@ -71,6 +79,14 @@ $transitionTime: all 0.5s;
 
 .nav {
     background-color: #eef1f6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+.opa {
+    opacity: 0.75;
 }
 // @mixin setActiveColor{
 // 	background: $activeBgColor;

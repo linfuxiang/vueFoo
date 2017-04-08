@@ -1,17 +1,16 @@
 <template>
     <div class="charts">
-        <header>{{header}}</header>
+        <!-- <header>{{header}}</header> -->
         <!-- <top :jsonData="jsonData" keep-alive v-if="showWhichComponent == 1"></top> -->
         <!-- <geo :jsonData="jsonData" keep-alive v-if="showWhichComponent == 2"></geo> -->
         <!-- <transition name="fade"> -->
-            <!-- <keep-alive> -->
+            <keep-alive>
                 <!-- <transition name="fade" mode="out-in"> -->
                 <component class="charts_com" :is="showWhichComponent"></component>
                 <!-- </transition> -->
-            <!-- </keep-alive> -->
+            </keep-alive>
         <!-- </transition> -->
-        
-        <button @click="charts_change">切换图表&gt;</button>
+        <el-button type="primary" @click="charts_change">切换图表<i class="el-icon-arrow-right el-icon--right"></i></el-button>
     </div>
 </template>
 <script>
@@ -37,10 +36,13 @@ export default {
     },
     components: {
         bar: function(resolve){
-            require(['./Bar'], resolve);
+            require(['./charts/Bar'], resolve);
         },
         geo: function(resolve){
-            require(['./Geo'], resolve);
+            require(['./charts/Geo'], resolve);
+        },
+        lines: function(resolve){
+            require(['./charts/Line'], resolve);
         }
     },
     methods: {
@@ -64,15 +66,6 @@ $buttonColor: #A5DE37;
 }
 .fade-enter, .fade-leave-active {
   opacity: 0
-}
-button {
-    background-color: $buttonColor;
-    color: #FFF;
-    border: 1px solid $buttonColor;
-    padding: 5px 10px;
-    font-size: 20px;
-    outline: none;
-    cursor: pointer;
 }
 .charts_com{
     margin: 0 auto;

@@ -1,6 +1,6 @@
 <template>
     <div class="geo">
-        <div ref="geo" style="width: 800px;height: 600px;"></div>
+        <div ref="geo" style="width: 960px;height: 600px;"></div>
     </div>
 </template>
 <script>

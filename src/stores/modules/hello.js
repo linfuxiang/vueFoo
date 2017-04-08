@@ -17,7 +17,7 @@ export default {
     		state.discussionLists = data;
     	},
     	hello_update_list(state, data) {
-    		state.discussionLists.push(data);
+    		state.discussionLists.unshift(data);
     		state.input = '';
     	},
     	hello_update_input(state, data) {

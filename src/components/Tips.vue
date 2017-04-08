@@ -1,12 +1,11 @@
 <template>
     <div class="tips">
-    	<h1 class="tip">Tips</h1>
     	<div class="text">空气质量指数（Air Quality Index，简称AQI）是定量描述空气质量状况的指数，分为五级，相对应空气质量的六个类别，其数值越大说明空气污染状况越严重，对人体健康的危害也就越大。参与空气质量评价的主要污染物为细颗粒物（pm2.5）、可吸入颗粒物（pm10）、二氧化硫（SO2）、二氧化氮（NO2）、臭氧（O3）、一氧化碳（CO）等六项。</div>
         <table cellspacing="0" class="m10">
             <tr>
                 <th class="th-1st">指数</th>
                 <th class="th-2nd">等级</th>
-                <th class="th-3rd">空气质量查询网温馨提示</th>
+                <th class="th-3rd">温馨提示</th>
             </tr>
             <tr>
                 <td class="td-1st">0-50</td>
@@ -58,7 +57,7 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-	$thBgColor: #c5de89;
+	$thBgColor: #043567;
 	$thFontColor: #fff;
 
 	$level1BgColor: #4cc74c;
@@ -72,25 +71,28 @@ export default {
 		transition: all $time;
 	}
 	.tips{
+		margin-top: 10px;
+		background-color: #f2f2f8;
 		// background: white;
-		position: fixed;
-		bottom: 0px;
-		right: -700px;
-		width: 700px;
+		// position: fixed;
+		// bottom: 0px;
+		// right: -700px;
+		width: 300px;
+		// float: right;
 		font-size: 14px;
-		@include transitionOpt;
+	    // z-index: 10;
+		// @include transitionOpt;
 		&:hover{
 			h1{
 				opacity: 0;
 			}
-			right: 0px;
+			// right: 0px;
 		}
 		.tip{
 			width: 80px;
 			margin-left: -80px;
-			background-color: transparent;
 			color: black;
-			@include transitionOpt;
+			// @include transitionOpt;
 		}
 		.text{
 			text-align: left;
@@ -112,7 +114,8 @@ export default {
 				}
 			}
 			td{
-				background-color: white;
+				// background-color: white;
+				border: 1px solid white;
 			}
 			.level1{
 				color: $level1BgColor;
@@ -139,7 +142,7 @@ export default {
 				// background-color: #FFE9C4;
 			}
 			tr:not(:first-child):hover{
-				background-color: #D3FFDF;
+				// background-color: #D3FFDF;
 			}
 		}
 	}

@@ -59,11 +59,11 @@ export default {
         ...mapActions(['advice_getData']),
     },
     mounted() {
-        this.$notify.info({
-          title: '今天',
-          message: `今天是${new Date()}`
-        });
-        this.advice_getData();
+        // this.$notify.info({
+        //   title: '今天',
+        //   message: `今天是${new Date()}`
+        // });
+        // this.advice_getData();
         setInterval(()=>{
             this.time = new Date();
         }, 1000);
@@ -73,12 +73,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     .advice {
-        float: right;
+        // float: right;
         width: 300px;
         color: white;
         font-weight: lighter;
         text-align: left;
-        border-radius: 5px;
+        // border-radius: 5px;
         // font-size: 18px;
         &.bad {
             background: linear-gradient(#566b6e,#7d939b);
@@ -105,6 +105,7 @@ export default {
                     text-align: center;
                 }
                 img {
+                    position: static;
                     width: 30px;
                 }
                 .details-default {
