@@ -14,7 +14,7 @@
             </div>
             <city></city>
         </div>
-        <el-dialog title="登录" v-model="isSignIn" @close="user_closeSignIn">
+        <el-dialog title="登录" v-model="isSignIn" @close="user_closeSignIn" :modal-append-to-body="false">
             <el-form ref="signIn" label-width="85px" class="demo-ruleForm">
                 <el-form-item label="用户名">
                     <el-input type="text" v-model.trim="un" auto-complete="off"></el-input>
@@ -30,7 +30,7 @@
                 <!-- </el-form-item> -->
             </el-form>
         </el-dialog>
-        <el-dialog title="注册" v-model="isSignUp" @close="user_closeSignUp">
+        <el-dialog title="注册" v-model="isSignUp" @close="user_closeSignUp" :modal-append-to-body="false">
             <el-form ref="signUp" label-width="85px" class="demo-ruleForm">
                 <el-form-item label="用户名">
                     <el-input type="text" v-model.trim="un" auto-complete="off"></el-input>
