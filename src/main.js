@@ -29,6 +29,7 @@ sync(store, router)
 
 Vue.mixin(mixin)
 
+Vue.http.options.emulateJSON = true;
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({
     el: '#app',
