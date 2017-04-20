@@ -58,8 +58,8 @@ export default {
                 backgroundColor: '#fff',
                 title: {
                     text: '全国主要城市空气质量',
-                    subtext: 'data from tianqi.com',
-                    sublink: 'http://www.tianqi.com/air/',
+                    // subtext: 'data from tianqi.com',
+                    // sublink: 'http://www.tianqi.com/air/',
                     left: 'center',
                     textStyle: {
                         color: '#000'
