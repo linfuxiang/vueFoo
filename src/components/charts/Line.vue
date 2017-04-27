@@ -10,9 +10,7 @@
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 import GLOBAL_PATH from 'static/path.js'
-import {
-    mapState
-} from 'vuex'
+import { mapState } from 'vuex'
 // import { mapMutations } from 'vuex'
 
 export default {
