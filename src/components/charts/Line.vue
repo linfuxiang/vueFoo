@@ -1,7 +1,7 @@
 <template>
     <div class="lines">
         <el-date-picker v-model="datesArray" type="daterange" align="right" placeholder="选择日期范围" :picker-options="pickerOptions2"></el-date-picker>
-        <el-autocomplete class="inline-input" v-model="city" :fetch-suggestions="querySearch" placeholder="请输入地区" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
+        <el-autocomplete class="inline-input" v-model="searchCity" :fetch-suggestions="querySearch" placeholder="请输入地区" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
         <el-button type="primary" icon="search" @click="search">搜索</el-button>
         <div ref="lines" style="width: 960px;height: 600px;"></div>
     </div>
@@ -9,6 +9,12 @@
 <script>
 import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/toolbox'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/markPoint'
+import 'echarts/lib/component/markLine'
 import GLOBAL_PATH from 'static/path.js'
 import { mapState } from 'vuex'
 // import { mapMutations } from 'vuex'
@@ -38,6 +44,7 @@ export default {
             datesArray: '',
             cityList: [],
             map: null,
+            searchCity: '',
         }
     },
     computed: {
@@ -71,7 +78,7 @@ export default {
             // console.log(this.datesArray);
             this.$http.get(GLOBAL_PATH.JSONP_URI + 'getData2', {
                 params: {
-                    'reqArea': this.city,
+                    'reqArea': this.searchCity,
                     'time': JSON.stringify(this.datesArray)
                 }
             }).then((res) => {
@@ -121,6 +128,7 @@ export default {
     },
     beforeDestroy() {},
     mounted() {
+        this.searchCity = this.city;
         if (sessionStorage.cityList) {
             this.cityList = sessionStorage.cityList.split(',').map(item => {
                 return {

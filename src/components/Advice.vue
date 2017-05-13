@@ -8,13 +8,13 @@
                 {{ location.name }}
                 <span class="title-time">{{ time | timeFormatter }}</span>
             </div>
-            <div class="details">
+            <div class="details" style="text-align:center;">
                 <div class="details-temp">{{ now.temperature }}</div>
                 <div class="details-default">°C</div>
                 <div class="details-default">{{ now.text }}
                     <br><img :src="`static/img/icons/${now.code}.png`"></div>
-                <div class="details-default" style="font-weight: bold;font-size: 20px;">空气{{ now.situ }} {{ now.aqi }}</div>
             </div>
+            <div class="details-default" style="font-weight: bold;font-size: 20px;text-align:center;">空气：{{ now.situ }} {{ now.aqi }}</div>
             <div class="brief">
                 <div class="">洗车指数
                     <br><span>{{ suggestion.car_washing.brief }}</span></div>
@@ -43,42 +43,36 @@
     </div>
 </template>
 <script>
-import {
-    mapState
-} from 'vuex'
-import {
-    mapMutations
-} from 'vuex'
-import {
-    mapActions
-} from 'vuex'
+import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     data() {
-            return {
-                isDay: false,
-                time: new Date(),
-            }
-        },
-        computed: {
-            ...mapState({
-                canShow: state => state.advice.canShow,
-                now: state => state.advice.now,
-                daily: state => state.advice.daily,
-                location: state => state.advice.location,
-                suggestion: state => state.advice.suggestion,
-            }),
-        },
-        methods: {
-            ...mapMutations(['global_setDate']),
-            ...mapActions(['advice_getData']),
-        },
-        mounted() {
-            // this.advice_getData();
-            setInterval(() => {
-                this.time = new Date();
-            }, 1000);
+        return {
+            isDay: false,
+            time: new Date(),
         }
+    },
+    computed: {
+        ...mapState({
+            canShow: state => state.advice.canShow,
+            now: state => state.advice.now,
+            daily: state => state.advice.daily,
+            location: state => state.advice.location,
+            suggestion: state => state.advice.suggestion,
+        }),
+    },
+    methods: {
+        ...mapMutations(['global_setDate']),
+        ...mapActions(['advice_getData']),
+    },
+    mounted() {
+        // this.advice_getData();
+        setInterval(() => {
+            this.time = new Date();
+        }, 1000);
+    }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

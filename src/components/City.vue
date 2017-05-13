@@ -11,7 +11,7 @@
 	    		</ul> -->
 	    		<!-- <i @click="city_togglecityModal">×</i> -->
 	    		<!-- <el-button type="text" >打开嵌套表单的 Dialog</el-button> -->
-    		<el-dialog title="选择城市" v-model="dialogVisible" @close="city_hideDialog" custom-class="dialog">
+    		<el-dialog title="选择城市" v-model="dialogVisible" @close="city_hideDialog" custom-class="dialog" :modal-append-to-body="false">
 				<el-button v-for="item in cityList" type="text" @click="city_selectCity($event)">{{ item }}</el-button>
 			</el-dialog>	
 	    	<!-- </div> -->

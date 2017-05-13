@@ -18,7 +18,43 @@
                 <el-input placeholder="输入为空则搜索全部数据" v-model="searchVal" icon="search" :on-icon-click="details_search"></el-input>
             </div>
         </div>
-        <el-table :default-sort = "{prop: 'AQI', order: 'descending'}" :data="jsonData" height="600" border style="width: 100%" :row-class-name="setRowClass">
+        <el-table :data="jsonData" style="width: 100%" :row-class-name="setRowClass" height="600">
+            <el-table-column type="expand" :formatter="formatter">
+                <template scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form-item label="首要污染物">
+                            <span>{{ props.row.pri }}</span>
+                        </el-form-item>
+                        <el-form-item label="pm2.5">
+                            <span>{{ props.row.pm25 }}</span>
+                        </el-form-item>
+                        <el-form-item label="pm10">
+                            <span>{{ props.row.pm10 }}</span>
+                        </el-form-item>
+                        <el-form-item label="一氧化碳">
+                            <span>{{ props.row.co }}</span>
+                        </el-form-item>
+                        <el-form-item label="二氧化氮">
+                            <span>{{ props.row.no2 }}</span>
+                        </el-form-item>
+                        <el-form-item label="臭氧一小时平均">
+                            <span>{{ props.row.o3 }}</span>
+                        </el-form-item>
+                        <el-form-item label="臭氧八小时平均">
+                            <span>{{ props.row.o3_8h }}</span>
+                        </el-form-item>
+                        <el-form-item label="二氧化硫">
+                            <span>{{ props.row.so2 }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
+            <el-table-column label="#" prop="index" width="80"></el-table-column>
+            <el-table-column label="城市" prop="city" :filters="[{ text: '只看' + city + '及其排名附近', value: index }]" :filter-method="filterTag" filter-placement="bottom-start"></el-table-column>
+            <el-table-column label="AQI指数" prop="aqi"></el-table-column>
+            <el-table-column label="污染等级" prop="situ"></el-table-column>
+        </el-table>
+        <!-- <el-table :default-sort = "{prop: 'AQI', order: 'descending'}" :data="jsonData" height="600" border style="width: 100%" :row-class-name="setRowClass">
             <el-table-column type="index" label="#" width="80"></el-table-column>
             <el-table-column prop="city" label="城市" width="80"></el-table-column>
             <el-table-column prop="aqi" sortable label="AQI" width="90"></el-table-column>
@@ -31,37 +67,7 @@
             <el-table-column :formatter="formatter" sortable prop="o3" label="O3" width="110"></el-table-column>
             <el-table-column :formatter="formatter" sortable prop="o3_8h" label="O3_8h" width="110"></el-table-column>
             <el-table-column :formatter="formatter" sortable prop="so2" label="SO2" width="110"></el-table-column>
-        </el-table>
-        <!-- <table cellspacing="0">
-            <tr>
-                <th>排序</th>
-                <th style="width: 100px;">城市</th>
-                <th>AQI</th>
-                <th>等级</th>
-                <th>首要污染物</th>
-                <th>PM 2.5</th>
-                <th>PM 10</th>
-                <th>CO</th>
-                <th>NO2</th>
-                <th>O3</th>
-                <th>O3_8h</th>
-                <th>SO2</th>
-            </tr>
-            <tr v-for="(val, idx) in jsonData" :id="val.city" @mouseenter="details_showPic($event, val.situ)" @mouseleave="details_showPic($event)" :class="('level' + ((val.situ == '优') ? 1 : (val.situ == '良') ? 2 : (val.situ == '轻度污染') ? 3 : (val.situ == '中度污染') ? 4 : (val.situ == '重度污染') ? 5 : 6))">
-                <td>{{idx + 1}}</td>
-                <td>{{val.city}}</td>
-                <td class="color">{{val.aqi != -1 ? val.aqi : '无数据'}}</td>
-                <td class="color">{{val.situ}}</td>
-                <td>{{val.pri != -1 ? val.pri : '无数据'}}</td>
-                <td>{{val.pm25 != -1 ? val.pm25 : '无数据'}}</td>
-                <td>{{val.pm10 != -1 ? val.pm10 : '无数据'}}</td>
-                <td>{{val.co != -1 ? val.co : '无数据'}}</td>
-                <td>{{val.no2 != -1 ? val.no2 : '无数据'}}</td>
-                <td>{{val.o3 != -1 ? val.o3 : '无数据'}}</td>
-                <td>{{val.o3_8h != -1 ? val.o3_8h : '无数据'}}</td>
-                <td>{{val.so2 != -1 ? val.so2 : '无数据'}}</td>
-            </tr>
-        </table> -->
+        </el-table> -->
         <img src="static/img/a.jpg" :style="{top: y, left: x, filter: filter}" v-show="showPic" alt="">
     </div>
 </template>
@@ -101,7 +107,8 @@ export default {
     		jsonData: state => state.details.jsonData,
     		lastsearchVal: state => state.details.lastsearchVal,
     		abledToSearch: state => state.details.abledToSearch,
-    		
+    		city: state => state.city.city,
+            index: state => state.details.index,
     	}),
     	filter: function() {
     		return 'opacity(' + this.opacity + ') blur(' + this.blur + 'px)' 
@@ -134,8 +141,9 @@ export default {
     methods: {
         ...mapMutations(['global_toggleLoading']),
         ...mapActions(['details_search']),
-        aaa() {
-            console.log(1)
+        filterTag(value, row) {
+            console.log(this.index);
+            return Math.abs(this.index - row.index) < 5;
         },
         formatter(row, col) {
             return row[col.property] == -1 ? '_' : row[col.property]
@@ -268,4 +276,17 @@ export default {
     	width: 200px;
     	position: fixed;
 	}
+    .cell {
+        text-align: left;
+    }
+    .demo-table-expand label {
+        width: 150px;
+        color: #99a9bf;
+    }
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 48%;
+        text-align: left;
+    }
 </style>

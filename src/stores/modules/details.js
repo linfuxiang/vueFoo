@@ -14,6 +14,7 @@ export default {
         lastsearchVal: null,
         lasttimeVal: null,
         abledToSearch: true,
+        index: null,
     },
     mutations: {
         details_toggleSearch(state) {
@@ -32,6 +33,9 @@ export default {
         details_update_hourVal(state, val) {
             state.hourVal = val;
         },
+        details_setIndex(state, val) {
+            state.index = val;
+        }
     },
     actions: {
         details_search({ commit, state, rootState }) {
@@ -43,16 +47,23 @@ export default {
                 return false;
             }
             /* 如果查找全部且存在数据,不进行请求,直接读localStorage */
-            if(localStorage[dateStr]){
-                // console.log(JSON.parse(localStorage[dateStr]))
-                let data = JSON.parse(localStorage[dateStr]);
+            if(sessionStorage[dateStr] && searchVal == ''){
+                // console.log(JSON.parse(sessionStorage[dateStr]))
+                let data = JSON.parse(sessionStorage[dateStr]);
                 if(data.length !== 0) {
                     commit({
                         type: 'details_successSearch',
-                        jsonData: JSON.parse(localStorage[dateStr]),
+                        jsonData: JSON.parse(sessionStorage[dateStr]),
                         lastsearchVal: searchVal,
                         lasttimeVal: dateStr
                     })
+                    for(var i in data) {
+                        data[i].index = +i + 1;
+                        if(localStorage.city === data[i].city) {
+                            // sessionStorage.index = +i + 1;
+                            commit('details_setIndex', +i + 1);
+                        }
+                    }
                     return ;
                 }
             }
@@ -67,6 +78,13 @@ export default {
                 }
             }).then((res) => {
                 var data = res.data;
+                for(var i in data.data) {
+                    data.data[i].index = +i + 1;
+                    if(localStorage.city === data.data[i].city) {
+                        // sessionStorage.index = +i + 1;
+                        commit('details_setIndex', +i + 1);
+                    }
+                }
                 commit({
                     type: 'details_successSearch',
                     jsonData: data.data,
@@ -74,7 +92,7 @@ export default {
                     lasttimeVal: dateStr
                 });
                 if(searchVal == ''){
-                    localStorage[dateStr] = JSON.stringify(data.data);
+                    sessionStorage[dateStr] = JSON.stringify(data.data);
                 }
                 commit('global_hideLoading');
                 commit('details_toggleSearch');
