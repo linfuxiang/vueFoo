@@ -1,3 +1,3 @@
 export default {
-	JSONP_URI: 'https://www.superlfx.cn:8888/'
+	JSONP_URI: 'http://123.207.163.63:8888/'
 }
