@@ -9,7 +9,7 @@ import mixin from './mixins/mixin'
 import { sync } from 'vuex-router-sync'
 import VueResource from 'vue-resource'
 import elementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 // import { Button, Input, Select, Menu, MenuItem, Submenu, Table, TableColumn } from 'element-ui'
 
 // Vue.use(VueResource);
