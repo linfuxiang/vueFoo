@@ -20,7 +20,7 @@
         </div>
         <el-table :data="jsonData" style="width: 100%" :row-class-name="setRowClass" height="600">
             <el-table-column type="expand" :formatter="formatter">
-                <template scope="props">
+                <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                         <el-form-item label="首要污染物">
                             <span>{{ props.row.pri }}</span>

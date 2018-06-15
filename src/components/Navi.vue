@@ -88,6 +88,10 @@ $transitionTime: all 0.5s;
 .opa {
     opacity: 0.75;
 }
+
+.el-menu-demo {
+    background-color: #eef1f6;
+}
 // @mixin setActiveColor{
 // 	background: $activeBgColor;
 // 	color: $activeFontColor;
